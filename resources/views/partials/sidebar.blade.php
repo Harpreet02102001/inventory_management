@@ -2,17 +2,17 @@
 
     <div class="sidebar-menu">
 
-        <a href="#" class="sidebar-link active">
+        <a href="/index" class="sidebar-link active">
             <i class="bi bi-house-door"></i>
             <span>Dashboard</span>
         </a>
 
-        <a href="#" class="sidebar-link">
+        <a href="#" class="sidebar-link ">
             <i class="bi bi-tags"></i>
             <span>Categories</span>
         </a>
 
-        <a href="#" class="sidebar-link">
+        <a href="{{route('supplier')}}" class="sidebar-link">
             <i class="bi bi-truck"></i>
             <span>Suppliers</span>
         </a>

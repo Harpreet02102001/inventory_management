@@ -421,7 +421,4 @@
         </div>
 
     </div>
-
-   
-
-</x-layout>
+    I</x-layout>
