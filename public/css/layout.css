@@ -1,0 +1,16 @@
+ body {
+     background: #f5f7fb;
+     font-family: 'Segoe UI', sans-serif;
+ }
+
+ .main-wrapper {
+     display: flex;
+ }
+
+ .content-area {
+     width: 100%;
+ }
+
+ .page-content {
+     padding: 30px;
+ }

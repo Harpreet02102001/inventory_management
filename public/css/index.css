@@ -1,0 +1,175 @@
+.dashboard-title {
+    font-size: 48px;
+    color: #0f172a;
+}
+
+.dashboard-subtitle {
+    font-size: 22px;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    height: 100%;
+    border: 1px solid #edf1f7;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.card-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.card-icon i {
+    font-size: 34px;
+}
+
+.blue-bg {
+    background: #e8f1ff;
+    color: #0d6efd;
+}
+
+.green-bg {
+    background: #e8f9ef;
+    color: #16a34a;
+}
+
+.purple-bg {
+    background: #f3e8ff;
+    color: #7c3aed;
+}
+
+.orange-bg {
+    background: #fff1e7;
+    color: #f97316;
+}
+
+.light-blue-bg {
+    background: #edf4ff;
+    color: #2563eb;
+}
+
+.card-label {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #1e293b;
+}
+
+.card-number {
+    font-size: 64px;
+    font-weight: 700;
+}
+
+.text-purple {
+    color: #7c3aed;
+}
+
+.low-stock-badge {
+    background: #fff1e7;
+    color: #f97316;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.dashboard-table-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid #edf1f7;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.table-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.table-title h5 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.table-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.warning-icon {
+    background: #fff1e7;
+    color: #f97316;
+}
+
+.primary-icon {
+    background: #edf4ff;
+    color: #2563eb;
+}
+
+.table-icon i {
+    font-size: 22px;
+}
+
+.table th {
+    font-size: 15px;
+    color: #64748b;
+    font-weight: 600;
+    padding: 16px;
+}
+
+.table td {
+    padding: 16px;
+    font-size: 15px;
+    color: #334155;
+}
+
+.table-badge {
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.warning-badge {
+    background: #fff1e7;
+    color: #f97316;
+}
+
+.success-badge {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.danger-badge {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.table-footer-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.table-footer-link a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #2563eb;
+    font-size: 16px;
+}
+
+.table-footer-link i {
+    margin-left: 6px;
+}
