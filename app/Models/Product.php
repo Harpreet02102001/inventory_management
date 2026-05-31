@@ -7,18 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
-class Supplier extends Model
+class Product extends Model
 {
-    use HasFactory;
     use Notifiable;
     use SoftDeletes;
+    use HasFactory;
 
-
-    protected $table = 'suppliers';
+    protected $table = 'products';
     protected $fillable = [
         'name',
-        'email',
-        'phone',
-        'address',
+        'sku',
+        'category_id',
+        'supplier_id',
+        'price',
+        'selling_price',
+        'quantity',
+        'image_url',
     ];
 }

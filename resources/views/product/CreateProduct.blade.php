@@ -16,7 +16,7 @@
     <form action="#" method="POST" enctype="multipart/form-data">
 
         @csrf
-
+        
         <!-- Basic Information -->
         <div class="card border-0 shadow-sm rounded-4 mb-4">
 
