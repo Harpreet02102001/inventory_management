@@ -23,8 +23,10 @@ Route::prefix('/supplier')->group(function () {
     Route::get('/', [SupplierController::class, 'index'])->name('supplier');
     Route::get('/create', [SupplierController::class, 'create'])->name('supplier.create');
     Route::get('/{id}', [SupplierController::class, 'show'])->name('supplier.show');
+    Route::post('/store', [SupplierController::class, 'store'])->name('supplier.store');
     Route::get('/{id}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');
-    Route::get('/{id}/destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+    Route::put('/{id}/update', [SupplierController::class, 'update'])->name('supplier.update');
+    // Route::delete('/{id}/destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
 });
 
 

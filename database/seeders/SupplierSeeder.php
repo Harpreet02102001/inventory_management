@@ -18,6 +18,7 @@ class SupplierSeeder extends Seeder
             'name' => 'LG Electronics',
             'email' => 'testing@gmail.com',
             'phone' => '7814557470',
+            'company' => 'LG Electronics',
             'Address' => 'Ludhiana',
         ]);
     }

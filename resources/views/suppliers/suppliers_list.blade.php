@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Suppliers">
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
 
@@ -82,7 +82,6 @@
                             <th>Products Count</th>
                             <th>Created Date</th>
                             <th class="text-center">Actions</th>
-
                         </tr>
 
                     </thead>
@@ -99,8 +98,8 @@
                                 {{ $supplier->name }}
                             </td>
 
-                            <td>
-                                {{ $supplier->company_name }}
+                            <td class="fw-semibold">
+                                {{ $supplier->company }}
                             </td>
 
                             <td>
