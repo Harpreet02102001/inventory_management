@@ -3,110 +3,125 @@
     <!-- Page Header -->
     <div class="mb-4">
 
-        <h2 class="fw-bolds mb-1">
+        <h2 class="fw-bold mb-1">
             Add Category
         </h2>
 
-        <p class="text-secondary fs-5">
+        <p class="text-muted mb-0">
             Create a new product category
         </p>
 
     </div>
 
-    <form action="#" method="POST">
-
-        @csrf
-
-        <!-- Basic Information -->
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
+    <!-- Form Card -->
+    <div class="row">
+        <div class="col-lg-6 card shadow-sm border-0">
 
             <div class="card-body p-4">
 
-                <h4 class="fw-bold mb-4 d-flex align-items-center gap-2">
+                <form action="{{ route('categories.store') }}"
+                    method="POST">
+                    @csrf
 
-                    <i class="bi bi-bookmark-check-fill text-primary"></i>
-
-                    Basic Information
-
-                </h4>
-
-                <div class="row g-4">
-
-                    <!-- Category Name -->
-                    <div class="col-lg-6">
+                    <!-- Name -->
+                    <div class="mb-3">
 
                         <label class="form-label fw-semibold">
-                            Category Name
-                            <span class="text-danger">*</span>
+                            Name <span class="text-danger">*</span>
                         </label>
 
                         <input type="text"
-                            class="form-control form-control-lg"
+                            name="name"
+                            value="{{ old('name') }}"
+                            class="form-control @error('name') is-invalid @enderror"
                             placeholder="Enter category name">
 
-                    </div>
-
-                    <!-- Status -->
-                    <div class="col-lg-6">
-
-                        <label class="form-label fw-semibold">
-                            Status
-                            <span class="text-danger">*</span>
-                        </label>
-
-                        <select class="form-select form-select-lg">
-
-                            <option>Active</option>
-                            <option>Inactive</option>
-
-                        </select>
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
 
                     </div>
 
                     <!-- Description -->
-                    <div class="col-lg-12">
+                    <div class="mb-3">
 
                         <label class="form-label fw-semibold">
                             Description
                         </label>
 
-                        <textarea class="form-control"
+                        <textarea
+                            name="description"
                             rows="4"
-                            placeholder="Enter category description"></textarea>
+                            class="form-control"
+                            placeholder="Enter category description">{{ old('description') }}</textarea>
 
-                        <small class="text-secondary">
-                            Optional: Add a brief description of this category.
+                        <small class="text-muted">
+                            Provide a short description for this category.
                         </small>
 
                     </div>
 
-                </div>
+                    <!-- Status -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Status <span class="text-danger">*</span>
+                        </label>
+
+                        <select
+                            name="status"
+                            class="form-select @error('status') is-invalid @enderror">
+
+                            <option value="">
+                                Select Status
+                            </option>
+
+                            <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>
+                                Active
+                            </option>
+
+                            <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>
+                                Inactive
+                            </option>
+
+                        </select>
+
+                        @error('status')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2">
+
+                        <button type="submit"
+                            class="btn btn-primary">
+
+                            <i class="bi bi-floppy me-1"></i>
+
+                            Save Category
+
+                        </button>
+
+                        <a href="{{ route('categories') }}"
+                            class="btn btn-outline-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </div>
+
+                </form>
 
             </div>
 
         </div>
 
-        <!-- Buttons -->
-        <div class="d-flex gap-3">
-
-            <button type="submit"
-                class="btn btn-primary btn-lg px-4">
-
-                <i class="bi bi-floppy me-2"></i>
-
-                Save Category
-
-            </button>
-
-            <button type="button"
-                class="btn btn-light border btn-lg px-4">
-
-                Cancel
-
-            </button>
-
-        </div>
-
-    </form>
-
+    </div>
 </x-layout>

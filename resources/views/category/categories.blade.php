@@ -10,7 +10,7 @@
             </p>
         </div>
 
-        <a href="{{ route('category.create') }}"
+        <a href="{{ route('categories.create') }}"
             class="btn btn-primary">
             <i class="bi bi-plus-lg me-1"></i>
             Add Category
@@ -101,145 +101,73 @@
                     </thead>
 
                     <tbody>
-
+                        @forelse($categories as $category)
                         <tr>
-
-                            <td>1</td>
+                            <td>{{ $category->id }}</td>
 
                             <td class="fw-semibold">
-                                Electronics
+                                {{ $category->name }}
                             </td>
 
                             <td>
-                                Electronic devices and gadgets
+                                {{ $category->description }}
                             </td>
 
                             <td>
-
+                                @if ($category->status == '1')
                                 <span class="badge bg-success-subtle text-success">
                                     Active
                                 </span>
-
+                                @else
+                                <span class="badge bg-secondary-subtle text-secondary">
+                                    Inactive
+                                </span>
+                                @endif
                             </td>
 
-                            <td>27</td>
+                            <td>{{ $category->products_count }}</td>
 
-                            <td>May 10, 2024</td>
+                            <td>{{ $category->created_at->format('M d, Y') }}</td>
 
                             <td>
 
                                 <div class="d-flex justify-content-center gap-1">
 
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
 
-                                    <button class="btn btn-sm btn-outline-warning">
+                                    <a href="{{ route('categories.edit', $category) }}"
+                                        class="btn btn-sm btn-outline-warning">
                                         <i class="bi bi-pencil"></i>
-                                    </button>
+                                    </a>
 
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+
+                                    <form action="{{ route('categories.destroy', $category->id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this category?')">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+
+                                    </form>
 
                                 </div>
-
                             </td>
-
                         </tr>
+
+
+                        @empty
 
                         <tr>
-
-                            <td>2</td>
-
-                            <td class="fw-semibold">
-                                Furniture
+                            <td colspan="7" class="text-center py-4">
+                                No categories found.
                             </td>
-
-                            <td>
-                                Office and home furniture
-                            </td>
-
-                            <td>
-
-                                <span class="badge bg-success-subtle text-success">
-                                    Active
-                                </span>
-
-                            </td>
-
-                            <td>14</td>
-
-                            <td>May 12, 2024</td>
-
-                            <td>
-
-                                <div class="d-flex justify-content-center gap-1">
-
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-outline-warning">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-
-                                </div>
-
-                            </td>
-
                         </tr>
 
-                        <tr>
-
-                            <td>3</td>
-
-                            <td class="fw-semibold">
-                                Accessories
-                            </td>
-
-                            <td>
-                                Mobile and computer accessories
-                            </td>
-
-                            <td>
-
-                                <span class="badge bg-success-subtle text-success">
-                                    Active
-                                </span>
-
-                            </td>
-
-                            <td>32</td>
-
-                            <td>May 15, 2024</td>
-
-                            <td>
-
-                                <div class="d-flex justify-content-center gap-1">
-
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-outline-warning">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-outline-secondary"
-                                        disabled>
-                                        <i class="bi bi-lock"></i>
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
+                        @endforelse
 
                     </tbody>
 
@@ -247,36 +175,7 @@
 
             </div>
 
-            <!-- Footer -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 p-3">
 
-                <small class="text-muted">
-                    Showing 1 to 6 of 6 categories
-                </small>
-
-                <nav>
-
-                    <ul class="pagination pagination-sm mb-0">
-
-                        <li class="page-item disabled">
-                            <a class="page-link">
-                                Previous
-                            </a>
-                        </li>
-
-                        <li class="page-item active">
-                            <a class="page-link">1</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link">Next</a>
-                        </li>
-
-                    </ul>
-
-                </nav>
-
-            </div>
 
         </div>
 

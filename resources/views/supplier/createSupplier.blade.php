@@ -3,9 +3,9 @@
     <!-- Header -->
     <div class="mb-4">
 
-        <h1 class="fw-bold display-5 mb-1">
+        <h2 class="fw-bold mb-1">
             Add Supplier
-        </h1>
+        </h2>
 
         <p class="text-secondary fs-5">
             Create a new supplier record

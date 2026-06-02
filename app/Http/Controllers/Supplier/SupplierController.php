@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Supplier;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Supplier;
 
 class SupplierController extends Controller
 {
@@ -12,7 +13,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('supplier.createSupplier');
+        $suppliers = Supplier::get();
+        return view('supplier.suppliers_list', compact('suppliers'));
     }
 
     /**
@@ -20,7 +22,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-         
+        $suppliers = Supplier::get();
+        return view('supplier.createSupplier', compact('suppliers'));
     }
 
     /**

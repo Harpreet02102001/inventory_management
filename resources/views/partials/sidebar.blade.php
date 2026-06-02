@@ -7,7 +7,7 @@
             <span>Dashboard</span>
         </a>
 
-        <a href="#" class="sidebar-link ">
+        <a href="{{route('categories')}}" class="sidebar-link ">
             <i class="bi bi-tags"></i>
             <span>Categories</span>
         </a>

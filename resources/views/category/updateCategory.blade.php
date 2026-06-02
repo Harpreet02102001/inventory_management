@@ -3,9 +3,9 @@
     <!-- Page Header -->
     <div class="mb-4">
 
-        <h1 class="fw-bold display-6 mb-1">
+        <h2 class="fw-bold mb-1">
             Edit Category
-        </h1>
+        </h2>
 
         <p class="text-secondary fs-5">
             Update category information
@@ -13,7 +13,7 @@
 
     </div>
 
-    <form action="#" method="POST">
+    <form action="{{ route('categories.update', $category->id) }}" method="POST">
 
         @csrf
         @method('PUT')
@@ -43,9 +43,12 @@
 
                         <input type="text"
                             class="form-control form-control-lg"
-                            value="Electronics"
+                            value="{{ $category->name }}"
+                            name="name"
                             placeholder="Enter category name">
-
+                        @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Status -->
@@ -56,10 +59,10 @@
                             <span class="text-danger">*</span>
                         </label>
 
-                        <select class="form-select form-select-lg">
+                        <select class="form-select form-select-lg" name="status">
 
-                            <option selected>Active</option>
-                            <option>Inactive</option>
+                            <option value="1" {{ $category->status == '1' ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ $category->status == '0' ? 'selected' : '' }}>Inactive</option>
 
                         </select>
 
@@ -74,7 +77,9 @@
 
                         <textarea class="form-control"
                             rows="4"
-                            placeholder="Enter category description">Electronic devices and gadgets for various purposes.</textarea>
+                            name="description"
+                            placeholder="Enter category description">{{ $category->description }}</textarea>
+
 
                         <small class="text-secondary">
                             Optional: Add a brief description of this category.
@@ -100,7 +105,7 @@
 
             </button>
 
-            <a href="{{ route('category.index') }}"
+            <a href="{{ route('categories')}}"
                 class="btn btn-light border btn-lg px-4">
 
                 Cancel
