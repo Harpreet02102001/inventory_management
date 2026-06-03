@@ -17,7 +17,7 @@
             <span>Suppliers</span>
         </a>
 
-        <a href="#" class="sidebar-link">
+        <a href="{{route('product')}}" class="sidebar-link">
             <i class="bi bi-box"></i>
             <span>Products</span>
         </a>

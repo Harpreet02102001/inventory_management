@@ -1,4 +1,4 @@
-<x-layout title="Products">
+<x-layout title='products'>
 
     <!-- Page Header -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
@@ -15,7 +15,7 @@
 
         </div>
 
-        <a href="#"
+        <a href="{{route('product.create')}}"
             class="btn btn-primary">
 
             <i class="bi bi-plus-lg me-1"></i>
@@ -124,8 +124,7 @@
 
                     <button class="btn btn-outline-secondary">
 
-                        <i class="bi bi-arrow-clockwise"></i>
-
+                        Reset
                     </button>
 
                 </div>
@@ -180,7 +179,7 @@
                     <tbody>
 
                         <!-- Row -->
-                        <tr>
+                        <!-- <tr>
 
                             <td class="ps-3">
 
@@ -242,14 +241,14 @@
 
                             </td>
 
-                        </tr>
+                        </tr> -->
 
                         <!-- Low Stock -->
-                        <tr class="table-warning bg-opacity-10">
+                        <!-- <tr class="table-warning bg-opacity-10">
 
                             <td class="ps-3">
 
-                                <img src="https://images.unsplash.com/photo-1505843490701-5be5d1b65c34?q=80&w=300"
+                                <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=300"
                                     class="rounded border"
                                     width="45"
                                     height="45"
@@ -313,10 +312,10 @@
 
                             </td>
 
-                        </tr>
+                        </tr> -->
 
                         <!-- Row -->
-                        <tr>
+                        <!-- <tr>
 
                             <td class="ps-3">
 
@@ -378,67 +377,174 @@
 
                             </td>
 
+                        </tr> -->
+
+                        @forelse($products as $product)
+
+                        <tr>
+
+                            <td class="ps-3">
+
+                                <img src="{{ $product->image_url ? asset('storage/' . $product->image_url) : 'https://via.placeholder.com/45' }}"
+                                    class="rounded border"
+                                    width="45"
+                                    height="45"
+                                    style="object-fit:cover;">
+
+                            </td>
+
+                            <td class="fw-semibold">
+                                {{ $product->name }}
+                            </td>
+
+                            <td>{{ $product->sku }}</td>
+
+                            <td>{{ $product->category->name }}</td>
+
+                            <td>{{ $product->supplier->name }}</td>
+
+                            <td>${{ number_format($product->price, 2) }}</td>
+
+                            <td>${{ number_format($product->selling_price, 2) }}</td>
+
+                            <td>{{ $product->stock_quantity }}</td>
+
+                            <td>
+
+                                @if ($product->status == 1)
+                                <span class="badge bg-success-subtle text-success">
+                                    Active
+                                </span>
+                                @else
+                                <span class="badge bg-secondary-subtle text-secondary">
+                                    Inactive
+                                </span>
+                                @endif
+
+
+                            </td>
+
+                            <td class="pe-3">
+
+                                <div class="d-flex justify-content-center gap-1 flex-wrap">
+
+                                    <a href="{{ route('product.show', $product) }}" class="btn btn-sm btn-light border">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+
+                                    <a href="{{ route('product.edit', $product) }}" class="btn btn-sm btn-light border">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <!-- Delete Button trigger modal -->
+                                    <form action="{{ route('product.destroy', $product->id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this product?')">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+
+                                    </form>
+
+
+                                    <!-- Delete Modal -->
+                                    <!-- <div class="modal fade" id="deleteModal{{ $product->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $product->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel{{ $product->id }}">Confirm Deletion</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- <button class="btn btn-sm btn-light border">
+                                        <i class="bi bi-box"></i>
+                                    </button> -->
+                                    @empty
+
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                No categories found.
+                            </td>
                         </tr>
 
-                    </tbody>
-
-                </table>
+                        @endforelse
 
             </div>
 
-            <!-- Footer -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 p-3">
+            </td>
+            </tr>
 
-                <small class="text-secondary">
+            </tbody>
 
-                    Showing 1 to 6 of 24 products
-
-                </small>
-
-                <!-- Pagination -->
-                <nav>
-
-                    <ul class="pagination pagination-sm mb-0">
-
-                        <li class="page-item">
-
-                            <a class="page-link" href="#">
-                                Prev
-                            </a>
-
-                        </li>
-
-                        <li class="page-item active">
-
-                            <a class="page-link" href="#">
-                                1
-                            </a>
-
-                        </li>
-
-                        <li class="page-item">
-
-                            <a class="page-link" href="#">
-                                2
-                            </a>
-
-                        </li>
-
-                        <li class="page-item">
-
-                            <a class="page-link" href="#">
-                                Next
-                            </a>
-
-                        </li>
-
-                    </ul>
-
-                </nav>
-
-            </div>
+            </table>
 
         </div>
+
+        <!-- Footer -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 p-3">
+
+            <small class="text-secondary">
+
+                Showing 1 to 6 of 24 products
+
+            </small>
+
+            <!-- Pagination -->
+            <nav>
+
+                <ul class="pagination pagination-sm mb-0">
+
+                    <li class="page-item">
+
+                        <a class="page-link" href="#">
+                            Prev
+                        </a>
+
+                    </li>
+
+                    <li class="page-item active">
+
+                        <a class="page-link" href="#">
+                            1
+                        </a>
+
+                    </li>
+
+                    <li class="page-item">
+
+                        <a class="page-link" href="#">
+                            2
+                        </a>
+
+                    </li>
+
+                    <li class="page-item">
+
+                        <a class="page-link" href="#">
+                            Next
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
 
     </div>
 

@@ -13,10 +13,11 @@
 
     </div>
 
-    <form action="#" method="POST" enctype="multipart/form-data">
+    <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
 
         @csrf
-        
+        enctype="multipart/form-data">
+
         <!-- Basic Information -->
         <div class="card border-0 shadow-sm rounded-4 mb-4">
 
@@ -42,9 +43,14 @@
 
                         <input type="text"
                             class="form-control form-control-lg"
-                            placeholder="Enter product name">
+                            placeholder="Enter product name"
+                            name="name">
 
+                        @error('name')
+                        <span class="texr-danger">$message</span>
+                        @enderror
                     </div>
+
 
                     <!-- SKU -->
                     <div class="col-lg-6">
@@ -54,9 +60,7 @@
                             <span class="text-danger">*</span>
                         </label>
 
-                        <input type="text"
-                            class="form-control form-control-lg"
-                            placeholder="Enter SKU (e.g. WM-001)">
+                        <input type="text" class="form-control form-control-lg" placeholder="Enter SKU (e.g. WM-001)" name="sku">
 
                     </div>
 
@@ -68,15 +72,17 @@
                             <span class="text-danger">*</span>
                         </label>
 
-                        <select class="form-select form-select-lg">
-
-                            <option>Electronics</option>
-                            <option>Furniture</option>
-                            <option>Accessories</option>
+                        <select class="form-select form-select-lg" name="category_id">
+                            <option value="">Select..</option>
+                            @forelse($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                            @empty
+                            <option>No categories available</option>
+                            @endforelse
 
                         </select>
 
-                        <small class="text-secondary">
+                        <small class=" text-secondary">
                             Only active categories are shown.
                         </small>
 
@@ -90,10 +96,14 @@
                             <span class="text-danger">*</span>
                         </label>
 
-                        <select class="form-select form-select-lg">
+                        <select class="form-select form-select-lg" name="supplier_id">
+                            <option value="">Select..</option>
+                            @forelse($suppliers as $supplier)
+                            <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                            @empty
+                            <option>No suppliers available</option>
+                            @endforelse
 
-                            <option>TechSource Ltd.</option>
-                            <option>ABC Supplier</option>
 
                         </select>
 
@@ -111,10 +121,10 @@
                             <span class="text-danger">*</span>
                         </label>
 
-                        <select class="form-select form-select-lg">
+                        <select class="form-select form-select-lg" name="status">
 
-                            <option>Active</option>
-                            <option>Inactive</option>
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
 
                         </select>
 
@@ -151,7 +161,8 @@
 
                         <input type="number"
                             class="form-control form-control-lg"
-                            placeholder="0.00">
+                            placeholder="0.00"
+                            name="price">
 
                         <small class="text-secondary">
                             Enter the product purchase price.
@@ -169,7 +180,8 @@
 
                         <input type="number"
                             class="form-control form-control-lg"
-                            placeholder="0.00">
+                            placeholder="0.00"
+                            name="selling_price">
 
                         <small class="text-secondary">
                             Enter the product selling price.
@@ -220,7 +232,8 @@
 
                         <input type="number"
                             class="form-control form-control-lg"
-                            placeholder="0">
+                            placeholder="0"
+                            name="stock_quantity">
 
                         <small class="text-secondary">
                             Enter the initial stock quantity.
@@ -258,7 +271,8 @@
                             </small>
 
                             <input type="file"
-                                class="form-control mt-3">
+                                class="form-control mt-3"
+                                name="image_url">
 
                         </div>
 

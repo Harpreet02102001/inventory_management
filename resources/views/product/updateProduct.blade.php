@@ -1,130 +1,134 @@
-<x-layout title="Update Stock">
+<x-layout title="Update Product">
 
     <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div class="mb-4">
 
-        <div>
+        <h1 class="fw-bold display-6 mb-1">
+            Update Product
+        </h1>
 
-            <h2 class="fw-bold mb-1">
-                Update Stock
-            </h2>
-
-            <p class="text-secondary mb-0">
-                Manage inventory stock quantity
-            </p>
-
-        </div>
-
-        <a href="{{route('product')}}"
-            class="btn btn-outline-secondary">
-
-            <i class="bi bi-arrow-left me-1"></i>
-
-            Back
-
-        </a>
+        <p class="text-secondary fs-5">
+            Update an existing inventory product
+        </p>
 
     </div>
 
-    <!-- Product Summary -->
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
+    <form action="{{route('product.update', $product->id)}}" method="POST" enctype="multipart/form-data">
 
-        <div class="card-body p-3 p-md-4">
+        @csrf
+        @method('PUT')
+        <enctype="multipart /form-data">
+            </enctype>
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <!-- Basic Information -->
+            <div class=" card border-0 shadow-sm rounded-4 mb-4">
 
-                <h5 class="fw-bold mb-0">
-                    Product Summary
-                </h5>
+                <div class="card-body p-4">
 
-                <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">
+                    <h4 class="fw-bold mb-4 d-flex align-items-center gap-2">
 
-                    Active
+                        <i class="bi bi-bookmark-check-fill text-primary"></i>
 
-                </span>
+                        Basic Information
 
-            </div>
+                    </h4>
 
-            <div class="row align-items-center g-4">
+                    <div class="row g-4">
 
-                <!-- Product Image -->
-                <div class="col-md-3 col-lg-2">
+                        <!-- Product Name -->
+                        <div class="col-lg-6">
 
-                    <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=400"
-                        class="img-fluid rounded-4 border"
-                        alt="Product">
-
-                </div>
-
-                <!-- Product Details -->
-                <div class="col-md-6 col-lg-7">
-
-                    <div class="row g-3">
-
-                        <div class="col-sm-6">
-
-                            <small class="text-secondary d-block">
+                            <label class="form-label fw-semibold">
                                 Product Name
-                            </small>
+                                <span class="text-danger">*</span>
+                            </label>
 
-                            <div class="fw-semibold">
-                                Wireless Mouse
-                            </div>
+                            <input type="text"
+                                class="form-control form-control-lg"
+                                placeholder="Enter product name"
+                                name="name" value="{{$product->name}}" s>
 
+                            @error('name')
+                            <span class="texr-danger">$message</span>
+                            @enderror
                         </div>
 
-                        <div class="col-sm-6">
 
-                            <small class="text-secondary d-block">
+                        <!-- SKU -->
+                        <div class="col-lg-6">
+
+                            <label class="form-label fw-semibold">
                                 SKU
-                            </small>
+                                <span class="text-danger">*</span>
+                            </label>
 
-                            <div class="fw-semibold">
-                                WM-001
-                            </div>
+                            <input type="text" class="form-control form-control-lg" placeholder="Enter SKU (e.g. WM-001)" name="sku" value="{{$product->sku}}">
 
                         </div>
 
-                        <div class="col-sm-6">
+                        <!-- Category -->
+                        <div class="col-lg-6">
 
-                            <small class="text-secondary d-block">
+                            <label class="form-label fw-semibold">
                                 Category
-                            </small>
+                                <span class="text-danger">*</span>
+                            </label>
 
-                            <div class="fw-semibold">
-                                Accessories
-                            </div>
+                            <select class="form-select form-select-lg" name="category_id">
+                                @forelse($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                @empty
+                                <option>No categories available</option>
+                                @endforelse
+
+                            </select>
+
+                            <small class=" text-secondary">
+                                Only active categories are shown.
+                            </small>
 
                         </div>
 
-                        <div class="col-sm-6">
+                        <!-- Supplier -->
+                        <div class="col-lg-6">
 
-                            <small class="text-secondary d-block">
+                            <label class="form-label fw-semibold">
                                 Supplier
-                            </small>
+                                <span class="text-danger">*</span>
+                            </label>
 
-                            <div class="fw-semibold">
-                                TechSource Ltd.
-                            </div>
+                            <select class="form-select form-select-lg" name="supplier_id">
+                                @forelse($suppliers as $supplier)
+                                <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                @empty
+                                <option>No suppliers available</option>
+                                @endforelse
+
+
+                            </select>
+
+                            <small class="text-secondary">
+                                Select from available suppliers.
+                            </small>
 
                         </div>
 
-                    </div>
+                        <!-- Status -->
+                        <div class="col-lg-6">
 
-                </div>
+                            <label class="form-label fw-semibold">
+                                Status
+                                <span class="text-danger">*</span>
+                            </label>
 
-                <!-- Stock -->
-                <div class="col-md-3 col-lg-3">
+                            <select class="form-select form-select-lg" name="status">
 
-                    <div class="border rounded-4 text-center p-3">
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
 
-                        <small class="text-secondary d-block mb-1">
-                            Current Stock
-                        </small>
+                            </select>
 
-                        <h2 class="fw-bold text-primary mb-0">
-                            45
-                        </h2>
+                        </div>
 
                     </div>
 
@@ -132,111 +136,211 @@
 
             </div>
 
-        </div>
+            <!-- Pricing -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
 
-    </div>
+                <div class="card-body p-4">
 
-    <!-- Update Form -->
-    <div class="card border-0 shadow-sm rounded-4">
+                    <h4 class="fw-bold mb-4 d-flex align-items-center gap-2">
 
-        <div class="card-body p-3 p-md-4">
+                        <i class="bi bi-tags-fill text-primary"></i>
 
-            <h5 class="fw-bold mb-4">
-                Stock Update
-            </h5>
+                        Pricing
 
-            <form>
+                    </h4>
 
-                <div class="row g-3">
+                    <div class="row g-4">
 
-                    <!-- Change Type -->
-                    <div class="col-md-4">
+                        <!-- Purchase Price -->
+                        <div class="col-lg-6">
 
-                        <label class="form-label fw-semibold small">
-                            Change Type
-                        </label>
+                            <label class="form-label fw-semibold">
+                                Purchase Price
+                                <span class="text-danger">*</span>
+                            </label>
 
-                        <select class="form-select">
+                            <input type="number"
+                                class="form-control form-control-lg"
+                                placeholder="0.00"
+                                name="price" value="{{$product->price}}">
 
-                            <option>Add</option>
-                            <option selected>Reduce</option>
+                            <small class="text-secondary">
+                                Enter the product purchase price.
+                            </small>
 
-                        </select>
+                        </div>
 
-                    </div>
+                        <!-- Selling Price -->
+                        <div class="col-lg-6">
 
-                    <!-- Quantity -->
-                    <div class="col-md-4">
+                            <label class="form-label fw-semibold">
+                                Selling Price
+                                <span class="text-danger">*</span>
+                            </label>
 
-                        <label class="form-label fw-semibold small">
-                            Quantity
-                        </label>
+                            <input type="number"
+                                class="form-control form-control-lg"
+                                placeholder="0.00"
+                                name="selling_price" value="{{$product->selling_price}}">
 
-                        <input type="number"
-                            class="form-control border-danger"
-                            value="50">
+                            <small class="text-secondary">
+                                Enter the product selling price.
+                            </small>
 
-                        <small class="text-danger d-block mt-1">
-
-                            Invalid quantity for reduce stock.
-
-                        </small>
-
-                    </div>
-
-                    <!-- Remarks -->
-                    <div class="col-md-4">
-
-                        <label class="form-label fw-semibold small">
-                            Remarks
-                        </label>
-
-                        <textarea class="form-control"
-                            rows="1"
-                            placeholder="Optional remarks"></textarea>
+                        </div>
 
                     </div>
 
                 </div>
 
-                <!-- Warning -->
-                <div class="alert alert-warning py-2 px-3 mt-4 mb-4 rounded-3">
+            </div>
 
-                    <small>
+            <!-- Stock & Image -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
 
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <div class="card-body p-4">
 
-                        Reducing stock affects inventory immediately.
+                    <div class="d-flex justify-content-between align-items-center mb-4">
 
-                    </small>
+                        <h4 class="fw-bold d-flex align-items-center gap-2 mb-0">
+
+                            <i class="bi bi-box-seam-fill text-primary"></i>
+
+                            Stock and Image
+
+                        </h4>
+
+                        <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
+
+                            <i class="bi bi-info-circle-fill me-1"></i>
+
+                            Image preview enabled
+
+                        </span>
+
+                    </div>
+
+                    <div class="row g-4">
+
+                        <!-- Stock Quantity -->
+                        <div class="col-lg-4">
+
+                            <label class="form-label fw-semibold">
+                                Stock Quantity
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input type="number"
+                                class="form-control form-control-lg"
+                                placeholder="0"
+                                name="stock_quantity" value="{{$product->stock_quantity}}">
+
+                            <small class="text-secondary">
+                                Enter the initial stock quantity.
+                            </small>
+
+                        </div>
+
+                        <!-- Upload -->
+                        <div class="col-lg-5">
+
+                            <label class="form-label fw-semibold">
+                                Product Image
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <div class="border border-2 border-primary border-opacity-25 rounded-4 p-5 text-center bg-light">
+
+                                <i class="bi bi-cloud-arrow-up text-primary display-5"></i>
+
+                                <p class="fw-semibold mt-3 mb-1">
+
+                                    Drag & drop product image or
+                                    <span class="text-primary">
+                                        browse
+                                    </span>
+
+                                </p>
+
+                                <small class="text-secondary d-block">
+                                    Supports: JPG, PNG, WEBP
+                                </small>
+
+                                <small class="text-secondary">
+                                    Max file size: 2MB
+                                </small>
+
+                                <input type="file"
+                                    class="form-control mt-3"
+                                    name="image_url">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Preview -->
+                        <div class="col-lg-3">
+
+                            <div class="card border rounded-4 overflow-hidden">
+
+                                <div class="position-relative">
+
+                                    <img src="{{ Storage::url($product->image_url) }}"
+                                        class="img-fluid"
+                                        alt="Product Image">
+
+                                    <button type="button"
+                                        class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 rounded-circle">
+
+                                        <i class="bi bi-x"></i>
+
+                                    </button>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <h6 class="mb-1">
+                                        Current Image
+                                    </h6>
+
+                                    <small class="text-secondary">
+                                        Current product image
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-                <!-- Buttons -->
-                <div class="d-flex flex-wrap gap-2">
+            </div>
 
-                    <button type="submit"
-                        class="btn btn-primary">
+            <!-- Buttons -->
+            <div class="d-flex gap-3">
 
-                        <i class="bi bi-floppy me-1"></i>
+                <button type="submit"
+                    class="btn btn-primary btn-lg px-4">
 
-                        Update Stock
+                    <i class="bi bi-floppy me-2"></i>
 
-                    </button>
+                    Save Product
 
-                    <button type="button"
-                        class="btn btn-light border">
+                </button>
 
-                        Cancel
+                <button type="button"
+                    class="btn btn-light border btn-lg px-4">
 
-                    </button>
+                    Cancel
 
-                </div>
+                </button>
 
-            </form>
+            </div>
 
-        </div>
-
-    </div>
+    </form>
 
 </x-layout>

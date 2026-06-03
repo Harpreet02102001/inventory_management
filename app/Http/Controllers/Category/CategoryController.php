@@ -27,15 +27,14 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|min:2|max:100|unique:categories,name',
-            'description' => 'nullable|max:255',
-            'status' => 'required|boolean'
+            'name'           => 'required|min:2|max:100|unique:categories,name',
+            'description'    => 'nullable|max:255',
+            'status'         => 'required|boolean'
         ]);
 
         try {
 
             DB::beginTransaction();
-
             Category::create($validated);
             DB::commit();
             Alert::toast('Category created Successfully.', 'success');
@@ -62,9 +61,9 @@ class CategoryController extends Controller
     {
         // dd($request->all(), $id);
         $validated = $request->validate([
-            'name' => 'required|min:2|max:100,unique:categories,name,' . $id,
-            'description' => 'nullable|max:255',
-            'status' => 'required|boolean'
+            'name'           => 'required|min:2|max:100,unique:categories,name,' . $id,
+            'description'    => 'nullable|max:255',
+            'status'         => 'required|boolean'
         ]);
 
         try {

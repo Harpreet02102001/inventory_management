@@ -22,6 +22,7 @@ class ProductSeeder extends Seeder
             'selling_price' => 26500,
             'stock_quantity' => 60,
             'image_url' => 'products.png',
+            'status' => 1,
         ]);
     }
 }

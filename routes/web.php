@@ -26,15 +26,19 @@ Route::prefix('/supplier')->group(function () {
     Route::post('/store', [SupplierController::class, 'store'])->name('supplier.store');
     Route::get('/{id}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');
     Route::put('/{id}/update', [SupplierController::class, 'update'])->name('supplier.update');
-    // Route::delete('/{id}/destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+    Route::delete('/{id}/destroy', [SupplierController::class, 'destroy'])->name('supplier.destroy');
 });
 
 
 
 Route::prefix('/product')->group(function () {
-    Route::get("/", [ProductController::class, 'index'])->name('product');
-    Route::get("/create", [ProductController::class, 'create'])->name('product.create');
-    Route::get("/edit", [ProductController::class, 'show'])->name('product.edit');
+    Route::get("/", [ProductController::class, 'index'])->name('product');  //to show all the products
+    Route::get("/create", [ProductController::class, 'create'])->name('product.create'); //show the form to add new resouce
+    Route::post('/store', [ProductController::class, 'store'])->name('product.store');  //to save a record into DB
+    Route::get("/{id}/edit", [ProductController::class, 'edit'])->name('product.edit');      // to show the form to edit the record
+    Route::get('{id}/show', [ProductController::class, 'show'])->name('product.show');   // show to show the details of a single resource
+    Route::put("/{id}/update", [ProductController::class, 'update'])->name('product.update');  // to update the record into database
+    Route::delete("/{id}/destroy", [ProductController::class, 'destroy'])->name('product.destroy');  // to delete the record from database
 });
 
 Route::prefix('/categories')->group(function () {
