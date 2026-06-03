@@ -72,6 +72,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
+    //display the details of a single product and update the stock quantity of the product
     public function show(string $id)
     {
         $product = Product::with(['supplier', 'category'])->findOrFail($id);
@@ -92,7 +93,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+public function update(Request $request, string $id)
     {
         $validated = $request->validate([
             'name'           => 'required|min:2|max:100|unique:products,name,' . $id,

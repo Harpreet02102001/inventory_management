@@ -3,6 +3,7 @@
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Stock\StockController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,9 +16,7 @@ Route::get('/index', function () {
 });
 
 
-Route::get('/stock', function () {
-    return view('stock.history');
-});
+Route::get('/stock', function () {});
 
 Route::prefix('/supplier')->group(function () {
     Route::get('/', [SupplierController::class, 'index'])->name('supplier');
@@ -49,3 +48,15 @@ Route::prefix('/categories')->group(function () {
     Route::put('/{id}/update', [CategoryController::class, 'update'])->name('categories.update');        //store updated data into database
     Route::delete('/{id}/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');  //to delete the category 
 });
+
+
+Route::prefix('/stock')->group(function () {
+    Route::get('/', [StockController::class, 'index'])->name('stock');
+    Route::get('/create', [StockController::class, 'create'])->name('stock.create');
+    Route::get('/viewData', [StockController::class, 'viewData'])->name('stock.view');
+    Route::post('/store', [StockController::class, 'store'])->name('stock.store');
+    Route::get('/{id}/edit', [StockController::class, 'edit'])->name('stock.edit');
+    Route::put('/{id}/update', [StockController::class, 'update'])->name('stock.update');
+    Route::delete('/{id}/destroy', [StockController::class, 'destroy'])->name('stock.destroy');
+});
+

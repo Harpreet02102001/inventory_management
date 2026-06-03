@@ -4,6 +4,10 @@ namespace App\Http\Controllers\stock;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Supplier;
+
 
 class stockController extends Controller
 {
@@ -12,7 +16,7 @@ class stockController extends Controller
      */
     public function index()
     {
-        return view('stock.history');
+        return view('stock.stock_list');
     }
 
     /**
@@ -20,7 +24,14 @@ class stockController extends Controller
      */
     public function create()
     {
-        //
+        return view('stock.stock_list');
+    }
+
+    public function viewData()
+    {
+        $products = Product::with(['category', 'supplier'])->where('stock_quantity', '<=', 10)->paginate(10);
+        return view('stock.low_stock', compact('products'));
+        // return view('stock.low_stock');
     }
 
     /**
@@ -52,7 +63,7 @@ class stockController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($id);
     }
 
     /**

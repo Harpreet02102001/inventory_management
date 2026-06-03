@@ -3,9 +3,9 @@
     <!-- Page Header -->
     <div class="mb-4">
 
-        <h1 class="fw-bold display-6 mb-1">
+        <h2 class="fw-bold  mb-1">
             Stock History
-        </h1>
+        </h2>
 
         <p class="text-secondary fs-5">
             Track all stock movement records
@@ -369,7 +369,6 @@
 
         Stock history shows all quantity changes, including additions,
         reductions, and manual adjustments.
-        <h1>Hello Usser </h1>
     </div>
 
 </x-layout>

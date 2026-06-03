@@ -148,7 +148,9 @@
                 Stock Update
             </h5>
 
-            <form>
+            <form action="{{ route('product.update', $product->id) }}"
+                method="POST">
+                @csrf
 
                 <div class="row g-3">
 

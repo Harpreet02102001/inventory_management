@@ -22,7 +22,7 @@
             <span>Products</span>
         </a>
 
-        <a href="#" class="sidebar-link">
+        <a href="{{route('stock')}}" class="sidebar-link">
             <i class="bi bi-clock-history"></i>
             <span>Stock History</span>
         </a>
