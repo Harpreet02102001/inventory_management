@@ -1,24 +1,34 @@
 <?php
 
+use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Stock\StockController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/index', function () {
     return view('welcome');
 });
 
 
-Route::get('/index', function () {
-    return view('dashboard.index');
+
+Route::prefix('/')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('dashboard.index');
+    });
+});
+
+Route::prefix('/user')->middleware('auth')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+    Route::get('/{id}', [UserController::class, 'show'])->name('user.show');
 });
 
 
 Route::get('/stock', function () {});
 
-Route::prefix('/supplier')->group(function () {
+Route::prefix('/supplier')->middleware('auth')->group(function () {
     Route::get('/', [SupplierController::class, 'index'])->name('supplier');
     Route::get('/create', [SupplierController::class, 'create'])->name('supplier.create');
     Route::get('/{id}', [SupplierController::class, 'show'])->name('supplier.show');
@@ -30,7 +40,7 @@ Route::prefix('/supplier')->group(function () {
 
 
 
-Route::prefix('/product')->group(function () {
+Route::prefix('/product')->middleware('auth')->group(function () {
     Route::get("/", [ProductController::class, 'index'])->name('product');  //to show all the products
     Route::get("/create", [ProductController::class, 'create'])->name('product.create'); //show the form to add new resouce
     Route::post('/store', [ProductController::class, 'store'])->name('product.store');  //to save a record into DB
@@ -40,7 +50,7 @@ Route::prefix('/product')->group(function () {
     Route::delete("/{id}/destroy", [ProductController::class, 'destroy'])->name('product.destroy');  // to delete the record from database
 });
 
-Route::prefix('/categories')->group(function () {
+Route::prefix('/categories')->middleware('auth')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('categories');
     Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');   //show the form to create new categories
     Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');     //store data into database
@@ -50,7 +60,7 @@ Route::prefix('/categories')->group(function () {
 });
 
 
-Route::prefix('/stock')->group(function () {
+Route::prefix('/stock')->middleware('auth')->group(function () {
     Route::get('/', [StockController::class, 'index'])->name('stock');
     Route::get('/create', [StockController::class, 'create'])->name('stock.create');
     Route::get('/viewData', [StockController::class, 'viewData'])->name('stock.view');
@@ -60,3 +70,10 @@ Route::prefix('/stock')->group(function () {
     Route::delete('/{id}/destroy', [StockController::class, 'destroy'])->name('stock.destroy');
 });
 
+
+Route::prefix('/login')->group(function () {
+    Route::get('/', [AuthController::class, 'index'])->name('login');
+    Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+});
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -24,19 +24,26 @@
                     data-bs-toggle="dropdown">
 
                     <i class="bi bi-person-circle fs-4"></i>
-                    Admin User
+                    @auth
+                    {{ auth()->user()->name }}
+                    @endauth
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end">
 
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item"
+                            href="{{ route('user.show', auth()->id()) }}">
+
+                            <i class="bi bi-person me-2"></i>
                             Profile
+
                         </a>
                     </li>
 
                     <li>
-                        <a class="dropdown-item text-danger" href="#">
+                        <a class="dropdown-item text-danger" href="{{route('logout')}}">
+                            <i class="bi bi-person me-2"></i>
                             Logout
                         </a>
                     </li>
