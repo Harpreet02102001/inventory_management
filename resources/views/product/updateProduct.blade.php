@@ -328,7 +328,7 @@
 
                     <i class="bi bi-floppy me-2"></i>
 
-                    Save Product
+                    Update Product
 
                 </button>
 

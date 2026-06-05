@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('selling_price', 10, 2);
             $table->integer('stock_quantity');
             $table->string('image_url')->nullable();
-            $table->string('status');
+            $table->string('status');   
             $table->timestamps();
             $table->softDeletes();
         });

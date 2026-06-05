@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -17,6 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+
         $suppliers = Supplier::get();
         $categories = Category::get();
         $products = Product::with(['supplier', 'category'])->get();
@@ -28,6 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Product::class);
         $suppliers = Supplier::get();
         $categories = Category::get();
         return view('product.CreateProduct', compact('suppliers', 'categories'));
@@ -39,6 +43,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // dd($request->all(), $request->file('image_url'));
+
+
         $validated = $request->validate([
             'name'           => 'required|min:2|max:100|unique:products,name',
             'sku'            => 'nullable|max:255',
@@ -131,9 +137,13 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         try {
+
             DB::beginTransaction();
 
             $product = Product::findOrFail($id);
+
+            $this->authorize('delete', $product);
+
             $product->delete();
 
             DB::commit();

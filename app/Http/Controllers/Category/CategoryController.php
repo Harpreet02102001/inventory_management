@@ -20,12 +20,14 @@ class CategoryController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Category::class);
         $categories = Category::get();
         return view('category.CreateCategory', compact('categories'));
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Category::class);
         $validated = $request->validate([
             'name'           => 'required|min:2|max:100|unique:categories,name',
             'description'    => 'nullable|max:255',
@@ -54,6 +56,9 @@ class CategoryController extends Controller
     public function edit(string $id, Category $category)
     {
         $category = Category::findOrFail($id);
+
+        $this->authorize('update', $category);
+
         return view('category.updateCategory', compact('category'));
     }
 
@@ -71,6 +76,7 @@ class CategoryController extends Controller
             DB::beginTransaction();
 
             $category = Category::findOrFail($id);
+            $this->authorize('update', $category);
             $category->update($validated);
 
             DB::commit();
@@ -90,6 +96,7 @@ class CategoryController extends Controller
             DB::beginTransaction();
 
             $category = Category::findOrFail($id);
+            $this->authorize('delete', $category);
             $category->delete();
 
             DB::commit();

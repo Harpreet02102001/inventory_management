@@ -14,115 +14,69 @@
     </div>
 
     <!-- Statistics Cards -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 mb-4">
 
-        <!-- Card 1 -->
-        <div class="col-xl col-md-6">
-
-            <div class="dashboard-card">
-
-                <div class="card-icon blue-bg">
-                    <i class="bi bi-box"></i>
+        <!-- Total Products -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted">Total Products</small>
+                        <h3 class="fw-bold mb-0">248</h3>
+                    </div>
+                    <div class="bg-primary bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-box fs-4 text-primary"></i>
+                    </div>
                 </div>
-
-                <h6 class="card-label">
-                    Total Products
-                </h6>
-
-                <h2 class="card-number text-primary">
-                    248
-                </h2>
-
             </div>
-
         </div>
 
-        <!-- Card 2 -->
-        <div class="col-xl col-md-6">
-
-            <div class="dashboard-card">
-
-                <div class="card-icon green-bg">
-                    <i class="bi bi-folder"></i>
+        <!-- Categories -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted">Categories</small>
+                        <h3 class="fw-bold mb-0">18</h3>
+                    </div>
+                    <div class="bg-success bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-folder fs-4 text-success"></i>
+                    </div>
                 </div>
-
-                <h6 class="card-label">
-                    Total Categories
-                </h6>
-
-                <h2 class="card-number text-success">
-                    18
-                </h2>
-
             </div>
-
         </div>
 
-        <!-- Card 3 -->
-        <div class="col-xl col-md-6">
-
-            <div class="dashboard-card">
-
-                <div class="card-icon purple-bg">
-                    <i class="bi bi-people"></i>
+        <!-- Suppliers -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted">Suppliers</small>
+                        <h3 class="fw-bold mb-0">34</h3>
+                    </div>
+                    <div class="bg-info bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-people fs-4 text-info"></i>
+                    </div>
                 </div>
-
-                <h6 class="card-label">
-                    Total Suppliers
-                </h6>
-
-                <h2 class="card-number text-purple">
-                    34
-                </h2>
-
             </div>
-
         </div>
 
-        <!-- Card 4 -->
-        <div class="col-xl col-md-6">
-
-            <div class="dashboard-card">
-
-                <div class="card-icon orange-bg">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
+        <!-- Low Stock -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-muted">Low Stock Products</small>
+                        <h3 class="fw-bold mb-0 text-warning">12</h3>
+                        <span class="badge bg-warning text-dark mt-1">
+                            Needs Attention
+                        </span>
+                    </div>
+                    <div class="bg-warning bg-opacity-10 p-3 rounded">
+                        <i class="bi bi-exclamation-triangle fs-4 text-warning"></i>
+                    </div>
                 </div>
-
-                <h6 class="card-label">
-                    Low Stock Products
-                </h6>
-
-                <h2 class="card-number text-warning">
-                    12
-                </h2>
-
-                <span class="badge low-stock-badge">
-                    Needs Attention
-                </span>
-
             </div>
-
-        </div>
-
-        <!-- Card 5 -->
-        <div class="col-xl col-md-6">
-
-            <div class="dashboard-card">
-
-                <div class="card-icon light-blue-bg">
-                    <i class="bi bi-arrow-repeat"></i>
-                </div>
-
-                <h6 class="card-label">
-                    Recently Updated Stock
-                </h6>
-
-                <h2 class="card-number text-primary">
-                    29
-                </h2>
-
-            </div>
-
         </div>
 
     </div>
@@ -421,4 +375,5 @@
         </div>
 
     </div>
-    I</x-layout>
+
+</x-layout>

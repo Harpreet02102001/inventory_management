@@ -14,16 +14,11 @@
             </p>
 
         </div>
-
-        <a href="{{route('product.create')}}"
-            class="btn btn-primary">
-
-            <i class="bi bi-plus-lg me-1"></i>
-
+        @can('create', App\Models\Product::class)
+        <a href="{{ route('product.create') }}" class="btn btn-primary">
             Add Product
-
         </a>
-
+        @endcan
     </div>
 
     <!-- Filters -->
@@ -178,206 +173,6 @@
 
                     <tbody>
 
-                        <!-- Row -->
-                        <!-- <tr>
-
-                            <td class="ps-3">
-
-                                <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=300"
-                                    class="rounded border"
-                                    width="45"
-                                    height="45"
-                                    style="object-fit:cover;">
-
-                            </td>
-
-                            <td class="fw-semibold">
-                                Wireless Mouse
-                            </td>
-
-                            <td>WM-001</td>
-
-                            <td>Accessories</td>
-
-                            <td>TechSource</td>
-
-                            <td>$10</td>
-
-                            <td>$18</td>
-
-                            <td>45</td>
-
-                            <td>
-
-                                <span class="badge bg-success-subtle text-success">
-
-                                    Active
-
-                                </span>
-
-                            </td>
-
-                            <td class="pe-3">
-
-                                <div class="d-flex justify-content-center gap-1 flex-wrap">
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border text-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-box"></i>
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr> -->
-
-                        <!-- Low Stock -->
-                        <!-- <tr class="table-warning bg-opacity-10">
-
-                            <td class="ps-3">
-
-                                <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=300"
-                                    class="rounded border"
-                                    width="45"
-                                    height="45"
-                                    style="object-fit:cover;">
-
-                            </td>
-
-                            <td class="fw-semibold">
-                                Office Chair
-                            </td>
-
-                            <td>OC-101</td>
-
-                            <td>Furniture</td>
-
-                            <td>Global Co.</td>
-
-                            <td>$85</td>
-
-                            <td>$129</td>
-
-                            <td>
-
-                                <span class="text-danger fw-bold">
-                                    6
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <span class="badge bg-warning-subtle text-warning">
-
-                                    Low
-
-                                </span>
-
-                            </td>
-
-                            <td class="pe-3">
-
-                                <div class="d-flex justify-content-center gap-1 flex-wrap">
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border text-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-box"></i>
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr> -->
-
-                        <!-- Row -->
-                        <!-- <tr>
-
-                            <td class="ps-3">
-
-                                <img src="https://images.unsplash.com/photo-1580901368919-7738efb0f87e?q=80&w=300"
-                                    class="rounded border"
-                                    width="45"
-                                    height="45"
-                                    style="object-fit:cover;">
-
-                            </td>
-
-                            <td class="fw-semibold">
-                                USB Cable
-                            </td>
-
-                            <td>USB-CB-01</td>
-
-                            <td>Accessories</td>
-
-                            <td>OfficeMax</td>
-
-                            <td>$2</td>
-
-                            <td>$4</td>
-
-                            <td>120</td>
-
-                            <td>
-
-                                <span class="badge bg-success-subtle text-success">
-
-                                    Active
-
-                                </span>
-
-                            </td>
-
-                            <td class="pe-3">
-
-                                <div class="d-flex justify-content-center gap-1 flex-wrap">
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border text-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-light border">
-                                        <i class="bi bi-box"></i>
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr> -->
 
                         @forelse($products as $product)
 
@@ -427,16 +222,19 @@
                             <td class="pe-3">
 
                                 <div class="d-flex justify-content-center gap-1 flex-wrap">
-
+                                    <!-- view -->
                                     <a href="{{ route('product.show', $product) }}" class="btn btn-sm btn-light border">
                                         <i class="bi bi-eye"></i>
                                     </a>
-
+                                    <!-- edit -->
+                                    @can('update', $product)
                                     <a href="{{ route('product.edit', $product) }}" class="btn btn-sm btn-light border">
                                         <i class="bi bi-pencil"></i>
                                     </a>
+                                    @endcan
 
                                     <!-- Delete Button trigger modal -->
+                                    @can('delete', $product)
                                     <form action="{{ route('product.destroy', $product->id) }}"
                                         method="POST"
                                         onsubmit="return confirm('Delete this product?')">
@@ -450,7 +248,7 @@
                                         </button>
 
                                     </form>
-
+                                    @endcan
 
                                     <!-- Delete Modal -->
                                     <!-- <div class="modal fade" id="deleteModal{{ $product->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $product->id }}" aria-hidden="true">

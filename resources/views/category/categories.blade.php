@@ -130,16 +130,16 @@
                             <td>{{ $category->created_at->format('M d, Y') }}</td>
 
                             <td>
-
                                 <div class="d-flex justify-content-center gap-1">
 
-
+                                    @can('update', $category)
                                     <a href="{{ route('categories.edit', $category) }}"
                                         class="btn btn-sm btn-outline-warning">
                                         <i class="bi bi-pencil"></i>
                                     </a>
+                                    @endcan
 
-
+                                    @can('delete', $category)
                                     <form action="{{ route('categories.destroy', $category->id) }}"
                                         method="POST"
                                         onsubmit="return confirm('Are you sure you want to delete this category?')">
@@ -153,6 +153,7 @@
                                         </button>
 
                                     </form>
+                                    @endcan
 
                                 </div>
                             </td>

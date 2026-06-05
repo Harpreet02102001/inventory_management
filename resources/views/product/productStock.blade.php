@@ -148,7 +148,7 @@
                 Stock Update
             </h5>
 
-            <form action="{{ route('product.update', $product->id) }}"
+            <form action="{{ route('stock.update', $product->id) }}"
                 method="POST">
                 @csrf
 
@@ -161,13 +161,13 @@
                             Change Type
                         </label>
 
-                        <select class="form-select">
-
-                            <option>Add</option>
-                            <option selected>Reduce</option>
-
+                        <select name="type" class="form-select">
+                            <option value="IN">Add Stock</option>
+                            <option value="OUT">Reduce Stock</option>
                         </select>
-
+                        @error('type')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
 
                     <!-- Quantity -->
@@ -178,12 +178,15 @@
                         </label>
 
                         <input type="number"
-                            class="form-control border-danger"
-                            value="50">
+                            name="quantity_changed"
+                            class="form-control @error('quantity_changed') is-invalid @enderror">
 
-                        <small class="text-danger d-block mt-1">
+                        @error('quantity_changed')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
 
-                            Invalid quantity for reduce stock.
 
                         </small>
 
@@ -198,6 +201,7 @@
 
                         <textarea class="form-control"
                             rows="1"
+                            name="remarks"
                             placeholder="Optional remarks"></textarea>
 
                     </div>

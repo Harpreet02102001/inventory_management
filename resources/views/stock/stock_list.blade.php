@@ -1,374 +1,307 @@
-<x-layout title="Stock History">
+    <x-layout title="Stock History">
 
-    <!-- Page Header -->
-    <div class="mb-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h2 class="fw-bold  mb-1">
-            Stock History
-        </h2>
+            <div>
+                <h2 class="fw-bold mb-1">
+                    Stock History
+                </h2>
 
-        <p class="text-secondary fs-5">
-            Track all stock movement records
-        </p>
+                <p class="text-secondary fs-5 mb-0">
+                    Track all stock movement records
+                </p>
+            </div>
 
-    </div>
+            <a href="{{route('stock.view')}}"
+                class="btn btn-warning btn-sm">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                Low Stock Items
+            </a>
 
-    <!-- Filters Card -->
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        </div>
 
-        <div class="card-body p-4">
+        <!-- Filters Card -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
 
-            <div class="row g-4 align-items-end">
+            <div class="card-body p-4">
 
-                <!-- Search -->
-                <div class="col-lg-3">
+                <div class="row g-4 align-items-end">
 
-                    <label class="form-label fw-semibold">
-                        Search
-                    </label>
+                    <!-- Search -->
+                    <div class="col-lg-3">
 
-                    <div class="input-group input-group-lg">
+                        <label class="form-label fw-semibold">
+                            Search
+                        </label>
 
-                        <span class="input-group-text bg-white">
-                            <i class="bi bi-search"></i>
-                        </span>
+                        <div class="input-group input-group-lg">
 
-                        <input type="text"
-                            class="form-control"
-                            placeholder="Search by product name or SKU">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-search"></i>
+                            </span>
+
+                            <input type="text"
+                                class="form-control"
+                                placeholder="Search by product name or SKU">
+
+                        </div>
+
+                    </div>
+
+                    <!-- Type -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">
+                            Type
+                        </label>
+
+                        <select class="form-select form-select-lg">
+
+                            <option>All Types</option>
+                            <option>Add</option>
+                            <option>Reduce</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Date From -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">
+                            Date Range
+                        </label>
+
+                        <input type="date"
+                            class="form-control form-control-lg">
+
+                    </div>
+
+                    <!-- Date To -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold invisible">
+                            To
+                        </label>
+
+                        <input type="date"
+                            class="form-control form-control-lg">
+
+                    </div>
+
+                    <!-- User -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">
+                            Updated By
+                        </label>
+
+                        <select class="form-select form-select-lg">
+
+                            <option>All Users</option>
+                            <option>Admin User</option>
+                            <option>Staff User</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Reset -->
+                    <div class="col-lg-1">
+
+                        <button class="btn btn-light border btn-lg w-100">
+
+                            <i class="bi bi-arrow-counterclockwise me-2"></i>
+
+                            Reset
+
+                        </button>
 
                     </div>
 
                 </div>
 
-                <!-- Type -->
-                <div class="col-lg-2">
-
-                    <label class="form-label fw-semibold">
-                        Type
-                    </label>
-
-                    <select class="form-select form-select-lg">
-
-                        <option>All Types</option>
-                        <option>Add</option>
-                        <option>Reduce</option>
-
-                    </select>
-
-                </div>
-
-                <!-- Date From -->
-                <div class="col-lg-2">
-
-                    <label class="form-label fw-semibold">
-                        Date Range
-                    </label>
-
-                    <input type="date"
-                        class="form-control form-control-lg">
-
-                </div>
-
-                <!-- Date To -->
-                <div class="col-lg-2">
-
-                    <label class="form-label fw-semibold invisible">
-                        To
-                    </label>
-
-                    <input type="date"
-                        class="form-control form-control-lg">
-
-                </div>
-
-                <!-- User -->
-                <div class="col-lg-2">
-
-                    <label class="form-label fw-semibold">
-                        Updated By
-                    </label>
-
-                    <select class="form-select form-select-lg">
-
-                        <option>All Users</option>
-                        <option>Admin User</option>
-                        <option>Staff User</option>
-
-                    </select>
-
-                </div>
-
-                <!-- Reset -->
-                <div class="col-lg-1">
-
-                    <button class="btn btn-light border btn-lg w-100">
-
-                        <i class="bi bi-arrow-counterclockwise me-2"></i>
-
-                        Reset
-
-                    </button>
-
-                </div>
-
             </div>
 
         </div>
 
-    </div>
+        <!-- Table Card -->
+        <div class="card border-0 shadow-sm rounded-4">
 
-    <!-- Table Card -->
-    <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-0">
 
-        <div class="card-body p-0">
+                <div class="table-responsive">
 
-            <div class="table-responsive">
+                    <table class="table align-middle mb-0">
 
-                <table class="table align-middle mb-0">
+                        <thead class="table-light">
 
-                    <thead class="table-light">
+                            <tr>
 
-                        <tr>
+                                <th class="px-4 py-3">Date & Time</th>
+                                <th class="py-3">Product</th>
+                                <th class="py-3">SKU</th>
+                                <th class="py-3">Old Quantity</th>
+                                <th class="py-3">Changed Quantity</th>
+                                <th class="py-3">New Quantity</th>
+                                <th class="py-3">Type</th>
+                                <th class="py-3">Updated By</th>
+                                <th class="py-3">Remarks</th>
 
-                            <th class="px-4 py-3">Date & Time</th>
-                            <th class="py-3">Product</th>
-                            <th class="py-3">SKU</th>
-                            <th class="py-3">Old Quantity</th>
-                            <th class="py-3">Changed Quantity</th>
-                            <th class="py-3">New Quantity</th>
-                            <th class="py-3">Type</th>
-                            <th class="py-3">Updated By</th>
-                            <th class="py-3">Remarks</th>
+                            </tr>
 
-                        </tr>
+                        </thead>
 
-                    </thead>
+                        <tbody>
 
-                    <tbody>
+                            @forelse ($stockHistories as $history)
 
-                        <!-- Row -->
-                        <tr>
+                            <tr>
 
-                            <td class="px-4">
-                                May 27, 2025 10:15 AM
-                            </td>
+                                <td class="px-4">
+                                    {{ $history->created_at->format('M d, Y h:i A') }}
+                                </td>
 
-                            <td>Wireless Mouse</td>
+                                <td>
+                                    {{ $history->product->name ?? 'N/A' }}
+                                </td>
 
-                            <td>WM-001</td>
+                                <td>
+                                    {{ $history->product->sku ?? 'N/A' }}
+                                </td>
 
-                            <td>45</td>
+                                <td>
+                                    {{ $history->old_quantity }}
+                                </td>
 
-                            <td class="text-success fw-bold">
-                                +15
-                            </td>
+                                <td class="{{ $history->quantity_changed < 0 ? 'text-danger' : 'text-success' }} fw-bold">
 
-                            <td>60</td>
+                                    {{ $history->quantity_changed > 0 ? '+' : '' }}
+                                    {{ $history->quantity_changed }}
 
-                            <td>
-                                <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">
-                                    Add
-                                </span>
-                            </td>
+                                </td>
 
-                            <td>Admin User</td>
+                                <td>
+                                    {{ $history->new_quantity }}
+                                </td>
 
-                            <td>Restocked from supplier</td>
+                                <td>
 
-                        </tr>
+                                    @if($history->type == 'IN')
 
-                        <!-- Row -->
-                        <tr>
+                                    <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">
+                                        Stock In
+                                    </span>
 
-                            <td class="px-4">
-                                May 27, 2025 09:02 AM
-                            </td>
+                                    @elseif($history->type == 'OUT')
 
-                            <td>USB Cable</td>
+                                    <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">
+                                        Stock Out
+                                    </span>
 
-                            <td>USB-003</td>
+                                    @else
 
-                            <td>120</td>
+                                    <span class="badge bg-warning-subtle text-warning px-3 py-2 rounded-pill">
+                                        Adjustment
+                                    </span>
 
-                            <td class="text-danger fw-bold">
-                                -20
-                            </td>
+                                    @endif
 
-                            <td>100</td>
+                                </td>
 
-                            <td>
-                                <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">
-                                    Reduce
-                                </span>
-                            </td>
+                                <td>
+                                    {{ $history->user->name ?? 'N/A' }}
+                                </td>
 
-                            <td>Staff User</td>
+                                <td>
+                                    {{ $history->remarks ?? '-' }}
+                                </td>
 
-                            <td>Sold items</td>
+                            </tr>
 
-                        </tr>
+                            @empty
 
-                        <!-- Row -->
-                        <tr>
+                            <tr>
 
-                            <td class="px-4">
-                                May 26, 2025 04:45 PM
-                            </td>
+                                <td colspan="9" class="text-center py-4 text-muted">
 
-                            <td>Office Chair</td>
+                                    No stock history found.
 
-                            <td>OC-002</td>
+                                </td>
 
-                            <td>18</td>
+                            </tr>
 
-                            <td class="text-success fw-bold">
-                                +12
-                            </td>
+                            @endforelse
 
-                            <td>30</td>
-
-                            <td>
-                                <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">
-                                    Add
-                                </span>
-                            </td>
-
-                            <td>Admin User</td>
-
-                            <td>Restocked from supplier</td>
-
-                        </tr>
-
-                        <!-- Row -->
-                        <tr>
-
-                            <td class="px-4">
-                                May 26, 2025 11:30 AM
-                            </td>
-
-                            <td>Monitor 24"</td>
-
-                            <td>MON-024</td>
-
-                            <td>25</td>
-
-                            <td class="text-danger fw-bold">
-                                -5
-                            </td>
-
-                            <td>20</td>
-
-                            <td>
-                                <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">
-                                    Reduce
-                                </span>
-                            </td>
-
-                            <td>Staff User</td>
-
-                            <td>Sold items</td>
-
-                        </tr>
-
-                        <!-- Row -->
-                        <tr>
-
-                            <td class="px-4">
-                                May 25, 2025 03:20 PM
-                            </td>
-
-                            <td>Keyboard</td>
-
-                            <td>KB-001</td>
-
-                            <td>40</td>
-
-                            <td class="text-danger fw-bold">
-                                -3
-                            </td>
-
-                            <td>37</td>
-
-                            <td>
-                                <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">
-                                    Reduce
-                                </span>
-                            </td>
-
-                            <td>Staff User</td>
-
-                            <td>Damaged stock removed</td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <!-- Footer -->
-            <div class="d-flex justify-content-between align-items-center p-4 flex-wrap gap-3">
-
-                <div class="text-secondary">
-
-                    Showing 1 to 8 of 42 stock records
+                        </tbody>
+                    </table>
+                    {{ $stockHistories->links() }}
 
                 </div>
+
+
+                <!-- Footer -->
+                <!-- <div class="d-flex justify-content-between align-items-center p-4 flex-wrap gap-3">
+
+                    <div class="text-secondary">
+
+                        Showing 1 to 8 of 42 stock records
+
+                    </div> -->
 
                 <!-- Pagination -->
-                <nav>
+                <!-- <nav>
 
-                    <ul class="pagination mb-0">
+                        <ul class="pagination mb-0">
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                Previous
-                            </a>
-                        </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    Previous
+                                </a>
+                            </li>
 
-                        <li class="page-item active">
-                            <a class="page-link" href="#">
-                                1
-                            </a>
-                        </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">
+                                    1
+                                </a>
+                            </li>
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                2
-                            </a>
-                        </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    2
+                                </a>
+                            </li>
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                3
-                            </a>
-                        </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    3
+                                </a>
+                            </li>
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                Next
-                            </a>
-                        </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    Next
+                                </a>
+                            </li>
 
-                    </ul>
+                        </ul>
 
-                </nav>
+                    </nav>
+
+                </div>
 
             </div>
 
-        </div>
+        </div> -->
 
-    </div>
+                <!-- Info Alert -->
+                <div class="alert alert-primary mt-4 rounded-4 d-flex align-items-center">
 
-    <!-- Info Alert -->
-    <div class="alert alert-primary mt-4 rounded-4 d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill me-3 fs-4"></i>
 
-        <i class="bi bi-info-circle-fill me-3 fs-4"></i>
+                    Stock history shows all quantity changes, including additions,
+                    reductions, and manual adjustments.
+                </div>
 
-        Stock history shows all quantity changes, including additions,
-        reductions, and manual adjustments.
-    </div>
-
-</x-layout>
+    </x-layout>

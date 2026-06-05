@@ -5,8 +5,12 @@ namespace App\Http\Controllers\stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Category;
-use App\Models\Supplier;
+use App\Models\StockHistory;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 
 
 class stockController extends Controller
@@ -16,9 +20,14 @@ class stockController extends Controller
      */
     public function index()
     {
-        return view('stock.stock_list');
-    }
+        $stockHistories = StockHistory::with([
+            'user',
+            'product.category',
+            'product.supplier'
+        ])->latest()->paginate(8);
 
+        return view('stock.stock_list', compact('stockHistories'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -34,6 +43,63 @@ class stockController extends Controller
         // return view('stock.low_stock');
     }
 
+    public function updateStock(Request $request, $id)
+    {
+        // dd($request->all());
+        DB::beginTransaction();
+
+        $validated = $request->validate([
+            'type' => 'required|in:IN,OUT,ADJUSTMENT',
+            'quantity_changed' => 'required|integer|min:1',
+            'remarks' => 'nullable|string|max:255',
+        ]);
+
+
+        $product = Product::findOrFail($id);
+
+        $oldQuantity = $product->stock_quantity;
+
+        if ($validated['type'] === 'IN') {
+
+            $newQuantity = $oldQuantity + $validated['quantity_changed'];
+        } else {
+
+            if ($request->quantity_changed > $oldQuantity) {
+
+                return back()->withErrors([
+                    'quantity_changed' => 'Insufficient stock available.'
+                ]);
+            }
+
+            $newQuantity = $oldQuantity - $validated['quantity_changed'];
+        }
+        try {
+            // Update Product Stock
+            $product->update([
+                'stock_quantity' => $newQuantity
+            ]);
+
+            // Save History
+            StockHistory::create([
+                'product_id'       => $product->id,
+                'user_id'          => auth()->id(),
+                'type'             => $request->type,
+                'old_quantity'     => $oldQuantity,
+                'quantity_changed' => $request->quantity_changed,
+                'new_quantity'     => $newQuantity,
+                'remarks'          => $request->remarks,
+            ]);
+
+            DB::commit();
+            Alert::toast('Stock updated successfully.', 'success');
+            return redirect()->route('stock', $product->id)->with('success', 'Stock updated successfully.');
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            Alert::toast('An Error occured while updating the stock.', 'error');
+            return back()->with('error', $e->getMessage());
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */

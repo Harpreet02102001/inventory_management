@@ -44,12 +44,12 @@
 
                                         <p class="mb-1">
                                             <strong>Role:</strong>
-                                            Administrator
+                                            {{ $user->role->name}}
                                         </p>
 
                                         <p class="mb-0">
                                             <strong>Member Since:</strong>
-                                            May 20, 2025
+                                            {{ $user->last_login_at}}
                                         </p>
 
                                     </div>
@@ -134,9 +134,9 @@
                     <div class="card-body">
 
                         <div class="d-flex justify-content-between py-2">
-                            <span>Status</span>
+                            <span>Name</span>
                             <span class="badge bg-success">
-                                Active
+                                {{$user->name}}
                             </span>
                         </div>
 
@@ -165,7 +165,7 @@
 
                         <div class="d-flex justify-content-between py-2">
                             <span>Last Login</span>
-                            <span>{{$user->created_at->format('M d, Y')}}</span>
+                            <span>{{$user->last_login_at}}</span>
                         </div>
 
                         <div class="alert alert-primary mt-4 mb-0">

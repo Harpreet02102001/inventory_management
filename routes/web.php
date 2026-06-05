@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Stock\StockController;
+use App\Http\Controllers\stock\stockController as StockStockController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/index', function () {
     return view('welcome');
@@ -26,7 +28,7 @@ Route::prefix('/user')->middleware('auth')->group(function () {
 });
 
 
-Route::get('/stock', function () {});
+// Route to handle suppliers transactiions
 
 Route::prefix('/supplier')->middleware('auth')->group(function () {
     Route::get('/', [SupplierController::class, 'index'])->name('supplier');
@@ -60,10 +62,12 @@ Route::prefix('/categories')->middleware('auth')->group(function () {
 });
 
 
+// Route to handle stock history and stock transaction
 Route::prefix('/stock')->middleware('auth')->group(function () {
     Route::get('/', [StockController::class, 'index'])->name('stock');
     Route::get('/create', [StockController::class, 'create'])->name('stock.create');
     Route::get('/viewData', [StockController::class, 'viewData'])->name('stock.view');
+    Route::post('{id}/updateStock', [StockController::class, 'updateStock'])->name('stock.update');
     Route::post('/store', [StockController::class, 'store'])->name('stock.store');
     Route::get('/{id}/edit', [StockController::class, 'edit'])->name('stock.edit');
     Route::put('/{id}/update', [StockController::class, 'update'])->name('stock.update');

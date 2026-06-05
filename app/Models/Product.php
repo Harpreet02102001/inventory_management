@@ -36,4 +36,13 @@ class Product extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
+
+    public function stockHistories()
+    {
+        return $this->hasMany(StockHistory::class);
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

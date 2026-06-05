@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('role_id')->constrained('roles');
             $table->string('password');
             $table->boolean('is_active')->default(true);
+            $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
