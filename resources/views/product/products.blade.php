@@ -24,107 +24,137 @@
     <!-- Filters -->
     <div class="card border-0 shadow-sm rounded-4 mb-4">
 
-        <div class="card-body p-3">
+        <div class="card-body p-4">
 
-            <div class="row g-3">
+            <form method="GET" action="{{ route('product') }}">
 
-                <!-- Search -->
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="row g-3 align-items-end">
 
-                    <label class="form-label small fw-semibold">
-                        Search
-                    </label>
+                    <!-- Search -->
+                    <div class="col-lg-3">
 
-                    <div class="input-group">
+                        <label class="form-label fw-semibold">
+                            Search
+                        </label>
 
-                        <span class="input-group-text bg-white">
-                            <i class="bi bi-search"></i>
-                        </span>
+                        <div class="input-group">
 
-                        <input type="text"
-                            class="form-control"
-                            placeholder="Product or SKU">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-search"></i>
+                            </span>
+
+                            <input type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                class="form-control"
+                                placeholder="Product or SKU">
+
+                        </div>
+
+                    </div>
+
+                    <!-- Category -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">
+                            Category
+                        </label>
+
+                        <select name="category_id" class="form-select">
+                            <option value="">All Categories</option>
+
+                            @foreach($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    <!-- Supplier -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">
+                            Supplier
+                        </label>
+
+                        <select name="supplier_id" class="form-select">
+                            <option value="">All Suppliers</option>
+
+                            @foreach($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}"
+                                {{ request('supplier_id') == $supplier->id ? 'selected' : '' }}>
+                                {{ $supplier->name }}
+                            </option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold">
+                            Status
+                        </label>
+
+                        <select name="status" class="form-select">
+                            <option value="">All Status</option>
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
+                        </select>
+
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="col-lg-1">
+
+                        <label class="form-label fw-semibold">
+                            Stock
+                        </label>
+
+                        <select name="stock" class="form-select">
+                            <option value="">All</option>
+                            <option value="low">Low</option>
+                        </select>
+
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label fw-semibold opacity-0">
+                            Action
+                        </label>
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                class="btn btn-primary flex-fill">
+
+                                <i class="bi bi-funnel me-1"></i>
+                                Search
+
+                            </button>
+
+                            <a href="{{ route('product') }}"
+                                class="btn btn-outline-secondary">
+
+                                <i class="bi bi-arrow-clockwise">Reset</i>
+
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-                <!-- Category -->
-                <div class="col-6 col-md-3 col-lg-2">
-
-                    <label class="form-label small fw-semibold">
-                        Category
-                    </label>
-
-                    <select class="form-select">
-
-                        <option>All</option>
-
-                    </select>
-
-                </div>
-
-                <!-- Supplier -->
-                <div class="col-6 col-md-3 col-lg-2">
-
-                    <label class="form-label small fw-semibold">
-                        Supplier
-                    </label>
-
-                    <select class="form-select">
-
-                        <option>All</option>
-
-                    </select>
-
-                </div>
-
-                <!-- Status -->
-                <div class="col-6 col-md-3 col-lg-2">
-
-                    <label class="form-label small fw-semibold">
-                        Status
-                    </label>
-
-                    <select class="form-select">
-
-                        <option>All</option>
-
-                    </select>
-
-                </div>
-
-                <!-- Low Stock -->
-                <div class="col-6 col-md-3 col-lg-2">
-
-                    <label class="form-label small fw-semibold">
-                        Stock
-                    </label>
-
-                    <select class="form-select">
-
-                        <option>All</option>
-                        <option>Low Stock</option>
-
-                    </select>
-
-                </div>
-
-                <!-- Reset -->
-                <div class="col-12 col-lg-1 d-grid">
-
-                    <label class="form-label small opacity-0">
-                        Reset
-                    </label>
-
-                    <button class="btn btn-outline-secondary">
-
-                        Reset
-                    </button>
-
-                </div>
-
-            </div>
+            </form>
 
         </div>
 
@@ -295,7 +325,7 @@
 
             <small class="text-secondary">
 
-                Showing 1 to 6 of 24 products
+
 
             </small>
 
@@ -304,37 +334,7 @@
 
                 <ul class="pagination pagination-sm mb-0">
 
-                    <li class="page-item">
-
-                        <a class="page-link" href="#">
-                            Prev
-                        </a>
-
-                    </li>
-
-                    <li class="page-item active">
-
-                        <a class="page-link" href="#">
-                            1
-                        </a>
-
-                    </li>
-
-                    <li class="page-item">
-
-                        <a class="page-link" href="#">
-                            2
-                        </a>
-
-                    </li>
-
-                    <li class="page-item">
-
-                        <a class="page-link" href="#">
-                            Next
-                        </a>
-
-                    </li>
+                    {{ $products->links() }}
 
                 </ul>
 

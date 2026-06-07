@@ -24,7 +24,7 @@ class stockController extends Controller
             'user',
             'product.category',
             'product.supplier'
-        ])->latest()->paginate(8);
+        ])->latest()->paginate(10);
 
         return view('stock.stock_list', compact('stockHistories'));
     }
@@ -39,8 +39,8 @@ class stockController extends Controller
     public function viewData()
     {
         $products = Product::with(['category', 'supplier'])->where('stock_quantity', '<=', 10)->paginate(10);
+
         return view('stock.low_stock', compact('products'));
-        // return view('stock.low_stock');
     }
 
     public function updateStock(Request $request, $id)
@@ -82,7 +82,7 @@ class stockController extends Controller
             // Save History
             StockHistory::create([
                 'product_id'       => $product->id,
-                'user_id'          => auth()->id(),
+                'user_id'          => Auth::user()->id,
                 'type'             => $request->type,
                 'old_quantity'     => $oldQuantity,
                 'quantity_changed' => $request->quantity_changed,

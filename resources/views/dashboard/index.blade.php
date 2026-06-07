@@ -3,9 +3,7 @@
     <!-- Page Heading -->
     <div class="mb-4">
 
-        <h1 class="fw-bold dashboard-title">
-            Admin Dashboard
-        </h1>
+        <h2 class="fw-bold mb-1">Dasboard</h2>
 
         <p class="text-muted dashboard-subtitle">
             Inventory summary and recent stock activity
@@ -22,7 +20,7 @@
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <small class="text-muted">Total Products</small>
-                        <h3 class="fw-bold mb-0">248</h3>
+                        <h3 class="fw-bold mb-0">{{ $totalProducts }}</h3>
                     </div>
                     <div class="bg-primary bg-opacity-10 p-3 rounded">
                         <i class="bi bi-box fs-4 text-primary"></i>
@@ -37,7 +35,7 @@
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <small class="text-muted">Categories</small>
-                        <h3 class="fw-bold mb-0">18</h3>
+                        <h3 class="fw-bold mb-0">{{$totalCategories}}</h3>
                     </div>
                     <div class="bg-success bg-opacity-10 p-3 rounded">
                         <i class="bi bi-folder fs-4 text-success"></i>
@@ -52,7 +50,7 @@
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <small class="text-muted">Suppliers</small>
-                        <h3 class="fw-bold mb-0">34</h3>
+                        <h3 class="fw-bold mb-0">{{$totalSuppliers}}</h3>
                     </div>
                     <div class="bg-info bg-opacity-10 p-3 rounded">
                         <i class="bi bi-people fs-4 text-info"></i>
@@ -67,7 +65,7 @@
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <small class="text-muted">Low Stock Products</small>
-                        <h3 class="fw-bold mb-0 text-warning">12</h3>
+                        <h3 class="fw-bold mb-0 text-warning">{{$lowStockCount}}</h3>
                         <span class="badge bg-warning text-dark mt-1">
                             Needs Attention
                         </span>
@@ -85,7 +83,7 @@
     <div class="row g-4">
 
         <!-- Low Stock Products -->
-        <div class="col-lg-7">
+        <div class="col-lg-6">
 
             <div class="dashboard-table-card">
 
@@ -110,7 +108,7 @@
                             <tr>
                                 <th>Product Name</th>
                                 <th>SKU</th>
-                                <th>Category</th>
+                                <!-- <th>Category</th> -->
                                 <th>Current Stock</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -120,11 +118,12 @@
 
                         <tbody>
 
+                            @forelse ($lowStockProducts as $product)
                             <tr>
-                                <td>Wireless Mouse</td>
-                                <td>SKU-1001</td>
-                                <td>Accessories</td>
-                                <td>5</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->sku }}</td>
+                                <!-- <td>{{ $product->category?->name }}</td> -->
+                                <td>{{ $product->stock_quantity }}</td>
 
                                 <td>
                                     <span class="table-badge warning-badge">
@@ -133,87 +132,19 @@
                                 </td>
 
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ route('product.show', $product->id) }}"
+                                        class="btn btn-sm btn-outline-primary">
                                         View
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
-
+                            @empty
                             <tr>
-                                <td>Office Chair</td>
-                                <td>SKU-1042</td>
-                                <td>Furniture</td>
-                                <td>3</td>
-
-                                <td>
-                                    <span class="table-badge warning-badge">
-                                        Low Stock
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        View
-                                    </button>
+                                <td colspan="6" class="text-center py-4">
+                                    No low stock products found.
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td>USB Cable</td>
-                                <td>SKU-1088</td>
-                                <td>Electronics</td>
-                                <td>7</td>
-
-                                <td>
-                                    <span class="table-badge warning-badge">
-                                        Low Stock
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Monitor 24"</td>
-                                <td>SKU-1023</td>
-                                <td>Electronics</td>
-                                <td>4</td>
-
-                                <td>
-                                    <span class="table-badge warning-badge">
-                                        Low Stock
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Printer Ink Cartridge</td>
-                                <td>SKU-1105</td>
-                                <td>Consumables</td>
-                                <td>2</td>
-
-                                <td>
-                                    <span class="table-badge warning-badge">
-                                        Low Stock
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
+                            @endforelse
 
                         </tbody>
 
@@ -222,7 +153,7 @@
                 </div>
 
                 <div class="table-footer-link">
-                    <a href="#">
+                    <a href="{{ route('stock.view') }}">
                         View all low stock products
                         <i class="bi bi-chevron-right"></i>
                     </a>
@@ -233,7 +164,7 @@
         </div>
 
         <!-- Recent Stock Updates -->
-        <div class="col-lg-5">
+        <div class="col-lg-6">
 
             <div class="dashboard-table-card">
 
@@ -267,95 +198,59 @@
 
                         <tbody>
 
+                            @forelse ($recentStockUpdates as $history)
+
                             <tr>
-                                <td>Laptop Stand</td>
 
                                 <td>
+                                    {{ $history->product?->name }}
+                                </td>
+
+                                <td>
+
+                                    @if ($history->type === 'IN')
+
                                     <span class="table-badge success-badge">
                                         Added
                                     </span>
-                                </td>
 
-                                <td class="text-success fw-bold">
-                                    +10
-                                </td>
+                                    @else
 
-                                <td>Admin User</td>
-
-                                <td>10:45 AM</td>
-                            </tr>
-
-                            <tr>
-                                <td>Keyboard</td>
-
-                                <td>
                                     <span class="table-badge danger-badge">
                                         Reduced
                                     </span>
+
+                                    @endif
+
                                 </td>
 
-                                <td class="text-danger fw-bold">
-                                    -2
+                                <td
+                                    class="{{ $history->type === 'IN' ? 'text-success' : 'text-danger' }} fw-bold">
+
+                                    {{ $history->type === 'IN' ? '+' : '-' }}
+                                    {{ $history->quantity_changed }}
+
                                 </td>
-
-                                <td>Staff A</td>
-
-                                <td>09:20 AM</td>
-                            </tr>
-
-                            <tr>
-                                <td>Wireless Mouse</td>
 
                                 <td>
-                                    <span class="table-badge success-badge">
-                                        Added
-                                    </span>
+                                    {{ $history->user?->name }}
                                 </td>
-
-                                <td class="text-success fw-bold">
-                                    +5
-                                </td>
-
-                                <td>Staff B</td>
-
-                                <td>08:55 AM</td>
-                            </tr>
-
-                            <tr>
-                                <td>Office Chair</td>
 
                                 <td>
-                                    <span class="table-badge danger-badge">
-                                        Reduced
-                                    </span>
+                                    {{ $history->created_at->format('h:i A') }}
                                 </td>
 
-                                <td class="text-danger fw-bold">
-                                    -1
-                                </td>
-
-                                <td>Admin User</td>
-
-                                <td>08:30 AM</td>
                             </tr>
+
+                            @empty
 
                             <tr>
-                                <td>USB Cable</td>
-
-                                <td>
-                                    <span class="table-badge success-badge">
-                                        Added
-                                    </span>
+                                <td colspan="5" class="text-center py-4">
+                                    No stock updates found.
                                 </td>
-
-                                <td class="text-success fw-bold">
-                                    +15
-                                </td>
-
-                                <td>Staff A</td>
-
-                                <td>Yesterday</td>
                             </tr>
+
+                            @endforelse
 
                         </tbody>
 
@@ -364,7 +259,7 @@
                 </div>
 
                 <div class="table-footer-link">
-                    <a href="#">
+                    <a href="{{ route('stock') }}">
                         View all stock updates
                         <i class="bi bi-chevron-right"></i>
                     </a>

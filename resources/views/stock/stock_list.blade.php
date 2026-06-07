@@ -22,43 +22,42 @@
         </div>
 
         <!-- Filters Card -->
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
 
-            <div class="card-body p-4">
-
-                <div class="row g-4 align-items-end">
+                <div class="row g-2 align-items-end">
 
                     <!-- Search -->
-                    <div class="col-lg-3">
+                    <div class="col-12 col-md-6 col-lg-3">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label small fw-semibold mb-1">
                             Search
                         </label>
 
-                        <div class="input-group input-group-lg">
+                        <div class="input-group">
 
-                            <span class="input-group-text bg-white">
+                            <span class="input-group-text">
                                 <i class="bi bi-search"></i>
                             </span>
 
                             <input type="text"
                                 class="form-control"
-                                placeholder="Search by product name or SKU">
+                                placeholder="Product / SKU">
 
                         </div>
 
                     </div>
 
                     <!-- Type -->
-                    <div class="col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-2">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label small fw-semibold mb-1">
                             Type
                         </label>
 
-                        <select class="form-select form-select-lg">
+                        <select class="form-select">
 
-                            <option>All Types</option>
+                            <option>All</option>
                             <option>Add</option>
                             <option>Reduce</option>
 
@@ -67,54 +66,52 @@
                     </div>
 
                     <!-- Date From -->
-                    <div class="col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-2">
 
-                        <label class="form-label fw-semibold">
-                            Date Range
+                        <label class="form-label small fw-semibold mb-1">
+                            From
                         </label>
 
                         <input type="date"
-                            class="form-control form-control-lg">
+                            class="form-control">
 
                     </div>
 
                     <!-- Date To -->
-                    <div class="col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-2">
 
-                        <label class="form-label fw-semibold invisible">
+                        <label class="form-label small fw-semibold mb-1">
                             To
                         </label>
 
                         <input type="date"
-                            class="form-control form-control-lg">
+                            class="form-control">
 
                     </div>
 
                     <!-- User -->
-                    <div class="col-lg-2">
+                    <div class="col-6 col-md-3 col-lg-2">
 
-                        <label class="form-label fw-semibold">
-                            Updated By
+                        <label class="form-label small fw-semibold mb-1">
+                            User
                         </label>
 
-                        <select class="form-select form-select-lg">
+                        <select class="form-select">
 
                             <option>All Users</option>
-                            <option>Admin User</option>
-                            <option>Staff User</option>
+                            <option>Admin</option>
+                            <option>Staff</option>
 
                         </select>
 
                     </div>
 
                     <!-- Reset -->
-                    <div class="col-lg-1">
+                    <div class="col-12 col-lg-1">
 
-                        <button class="btn btn-light border btn-lg w-100">
+                        <button class="btn btn-outline-secondary w-100">
 
-                            <i class="bi bi-arrow-counterclockwise me-2"></i>
-
-                            Reset
+                            <i class="bi bi-arrow-clockwise"></i>
 
                         </button>
 
@@ -123,7 +120,6 @@
                 </div>
 
             </div>
-
         </div>
 
         <!-- Table Card -->

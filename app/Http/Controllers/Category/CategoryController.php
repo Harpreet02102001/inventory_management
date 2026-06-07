@@ -12,10 +12,42 @@ use function PHPUnit\Framework\returnSelf;
 
 class CategoryController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $categories = Category::get();
+    //      return view('category.categories', compact('categories'));
+    // }
+
+    public function index(Request $request)
     {
-        $categories = Category::get();
-        return view('category.categories', compact('categories'));
+        $categories = Category::query();
+
+        // Search Filter
+        if ($request->filled('search')) {
+            $categories->where(
+                'name',
+                'like',
+                '%' . $request->search . '%'
+            );
+        }
+
+        // Status Filter
+        if ($request->filled('status')) {
+            $categories->where(
+                'status',
+                $request->status
+            );
+        }
+
+        $categories = $categories
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view(
+            'category.categories',
+            compact('categories')
+        );
     }
 
     public function create()

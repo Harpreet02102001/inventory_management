@@ -25,9 +25,9 @@
 
                     <div class="card-body">
 
-                        <form action="#" method="POST">
+                        <form action="{{route('profile.update')}}" method="POST">
                             @csrf
-
+                            @method('PUT')
                             <div class="row">
 
                                 <div class="col-md-4 text-center">
@@ -65,6 +65,7 @@
                                         </label>
 
                                         <input type="text"
+                                            name="name"
                                             class="form-control"
                                             value="{{ $user->name }}">
 
@@ -77,6 +78,7 @@
                                         </label>
 
                                         <input type="email"
+                                            name="email"
                                             class="form-control"
                                             value="{{ $user->email }}">
 
@@ -198,12 +200,14 @@
 
             <div class="card-body">
 
-                <form action="#" method="POST">
+                <form action="{{ route('profile.password') }}" method="POST">
 
                     @csrf
+                    @method('PUT')
 
                     <div class="row g-3">
 
+                        <!-- Current Password -->
                         <div class="col-md-4">
 
                             <label class="form-label fw-semibold">
@@ -211,10 +215,18 @@
                             </label>
 
                             <input type="password"
-                                class="form-control">
+                                name="current_password"
+                                class="form-control @error('current_password') is-invalid @enderror">
+
+                            @error('current_password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
 
                         </div>
 
+                        <!-- New Password -->
                         <div class="col-md-4">
 
                             <label class="form-label fw-semibold">
@@ -222,10 +234,18 @@
                             </label>
 
                             <input type="password"
-                                class="form-control">
+                                name="password"
+                                class="form-control @error('password') is-invalid @enderror">
+
+                            @error('password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
 
                         </div>
 
+                        <!-- Confirm Password -->
                         <div class="col-md-4">
 
                             <label class="form-label fw-semibold">
@@ -233,7 +253,14 @@
                             </label>
 
                             <input type="password"
-                                class="form-control">
+                                name="password_confirmation"
+                                class="form-control @error('password_confirmation') is-invalid @enderror">
+
+                            @error('password_confirmation')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
 
                         </div>
 
@@ -241,7 +268,7 @@
 
                     <div class="mt-4">
 
-                        <button class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary">
 
                             <i class="bi bi-lock me-1"></i>
 

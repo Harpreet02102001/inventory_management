@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Stock\StockController;
 use App\Http\Controllers\stock\stockController as StockStockController;
 use App\Http\Controllers\User\UserController;
@@ -17,14 +18,19 @@ Route::get('/index', function () {
 
 
 Route::prefix('/')->middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard.index');
-    });
+    Route::get('/', [DashboardController::class, 'adminDashboard'])->name('dashboard');
+    // Route::get('/', function () {
+    //     return view('dashboard.index');
+    // });
 });
 
 Route::prefix('/user')->middleware('auth')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('user.index');
+    Route::get('/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/store', [UserController::class, 'store'])->name('user.store');
     Route::get('/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
 });
 
 

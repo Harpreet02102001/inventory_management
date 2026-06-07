@@ -22,55 +22,73 @@
     <div class="card border-0 shadow-sm mb-4">
 
         <div class="card-body">
+            <form method="GET" action="{{ route('categories') }}">
 
-            <div class="row g-3 align-items-end">
+                <div class="row g-3 align-items-end">
 
-                <div class="col-md-6">
-                    <label class="form-label small fw-semibold">
-                        Search Category
-                    </label>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">
+                            Search Category
+                        </label>
 
-                    <div class="input-group">
+                        <div class="input-group">
 
-                        <span class="input-group-text bg-white">
-                            <i class="bi bi-search"></i>
-                        </span>
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-search"></i>
+                            </span>
 
-                        <input type="text"
-                            class="form-control"
-                            placeholder="Search by category name">
+                            <input type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                class="form-control"
+                                placeholder="Search by category name">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold">
+                            Status
+                        </label>
+
+                        <select name="status" class="form-select">
+
+                            <option value="">All</option>
+
+                            <option value="1"
+                                {{ request('status') == '1' ? 'selected' : '' }}>
+                                Active
+                            </option>
+
+                            <option value="0"
+                                {{ request('status') == '0' ? 'selected' : '' }}>
+                                Inactive
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 d-grid">
+
+                        <button type="submit"
+                            class="btn btn-primary">
+                            Filter
+                        </button>
+
+                    </div>
+
+                    <div class="col-md-1 d-grid">
+
+                        <a href="{{ route('categories') }}"
+                            class="btn btn-outline-secondary">
+                            Reset
+                        </a>
 
                     </div>
 
                 </div>
 
-                <div class="col-md-4">
-                    <label class="form-label small fw-semibold">
-                        Status
-                    </label>
-
-                    <select class="form-select">
-
-                        <option>All</option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-
-                    </select>
-                </div>
-
-                <div class="col-md-2 d-grid">
-
-                    <button class="btn btn-outline-secondary">
-
-                        <i class="bi bi-arrow-clockwise me-1"></i>
-                        Reset
-
-                    </button>
-
-                </div>
-
-            </div>
-
+            </form>
         </div>
 
     </div>
@@ -173,7 +191,7 @@
                     </tbody>
 
                 </table>
-
+                {{ $categories->links() }}
             </div>
 
 

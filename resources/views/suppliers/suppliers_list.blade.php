@@ -22,40 +22,53 @@
 
         <div class="card-body">
 
-            <label class="form-label fw-semibold">
-                Search
-            </label>
+            <form method="GET" action="{{ route('supplier') }}">
 
-            <div class="row g-3">
+                <label class="form-label fw-semibold">
+                    Search
+                </label>
 
-                <div class="col-md-10">
+                <div class="row g-3">
 
-                    <div class="input-group">
+                    <div class="col-md-10">
 
-                        <span class="input-group-text bg-white">
-                            <i class="bi bi-search"></i>
-                        </span>
+                        <div class="input-group">
 
-                        <input type="text"
-                            class="form-control"
-                            placeholder="Search by supplier name, email, phone, or company name">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-search"></i>
+                            </span>
+
+                            <input type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                class="form-control"
+                                placeholder="Search by supplier name, email, phone, or company name">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-1">
+
+                        <button type="submit"
+                            class="btn btn-primary w-100">
+                            Search
+                        </button>
+
+                    </div>
+
+                    <div class="col-md-1">
+
+                        <a href="{{ route('supplier') }}"
+                            class="btn btn-outline-secondary w-100">
+                            Reset
+                        </a>
 
                     </div>
 
                 </div>
 
-                <div class="col-md-2">
-
-                    <button class="btn btn-outline-secondary w-100">
-
-                        <i class="bi bi-arrow-counterclockwise me-2"></i>
-                        Reset
-
-                    </button>
-
-                </div>
-
-            </div>
+            </form>
 
         </div>
 
@@ -176,7 +189,7 @@
                     </tbody>
 
                 </table>
-
+                {{ $suppliers->links() }}
             </div>
 
             <!-- Footer -->

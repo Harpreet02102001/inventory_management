@@ -13,9 +13,30 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $suppliers = Supplier::get();
+    //     return view('suppliers.suppliers_list', compact('suppliers'));
+    // }
+    public function index(Request $request)
     {
-        $suppliers = Supplier::get();
+        $suppliers = Supplier::query();
+
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $suppliers->where(function ($query) use ($search) {
+
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%");
+            });
+        }
+
+        $suppliers = $suppliers->latest()->paginate(10)->withQueryString();
+
         return view('suppliers.suppliers_list', compact('suppliers'));
     }
 

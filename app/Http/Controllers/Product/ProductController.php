@@ -17,13 +17,51 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    // public function index()
+    // {
 
-        $suppliers = Supplier::get();
-        $categories = Category::get();
-        $products = Product::with(['supplier', 'category'])->get();
-        return view('product.products', compact('suppliers', 'categories', 'products'));
+    //     $suppliers = Supplier::get();
+    //     $categories = Category::get();
+    //     $products = Product::with(['supplier', 'category'])->get();
+    //     return view('product.products', compact('suppliers', 'categories', 'products'));
+    // }
+    public function index(Request $request)
+    {
+        $suppliers = Supplier::all();
+        $categories = Category::all();
+
+        $products = Product::with(['supplier', 'category'])
+
+            ->when($request->search, function ($query, $search) {
+
+                $query->where(function ($query) use ($search) {
+
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('sku', 'like', "%{$search}%");
+                });
+            })
+
+            ->when($request->category_id, function ($query, $categoryId) {
+
+                $query->where('category_id', $categoryId);
+            })
+
+            ->when($request->supplier_id, function ($query, $supplierId) {
+
+                $query->where('supplier_id', $supplierId);
+            })
+
+            ->when($request->status, function ($query, $status) {
+
+                $query->where('status', $status);
+            })
+
+            ->when($request->stock === 'low', function ($query) {
+
+                $query->where('stock_quantity', '<=', 10);
+            })->latest()->paginate(10)->withQueryString();
+
+        return view('product.products', compact('products', 'suppliers', 'categories'));
     }
 
     /**
