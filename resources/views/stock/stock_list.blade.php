@@ -26,97 +26,134 @@
             <div class="card-body">
 
                 <div class="row g-2 align-items-end">
+                    <form action="{{ route('stock') }}" method="GET">
 
-                    <!-- Search -->
-                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
 
-                        <label class="form-label small fw-semibold mb-1">
-                            Search
-                        </label>
+                                <div class="row g-2 align-items-end">
 
-                        <div class="input-group">
+                                    <!-- Search -->
+                                    <div class="col-12 col-md-6 col-lg-3">
 
-                            <span class="input-group-text">
-                                <i class="bi bi-search"></i>
-                            </span>
+                                        <label class="form-label small fw-semibold mb-1">
+                                            Search
+                                        </label>
 
-                            <input type="text"
-                                class="form-control"
-                                placeholder="Product / SKU">
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-search"></i>
+                                            </span>
 
+                                            <input type="text"
+                                                name="search"
+                                                value="{{ request('search') }}"
+                                                class="form-control"
+                                                placeholder="Product Name / SKU">
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Type -->
+                                    <div class="col-6 col-md-3 col-lg-2">
+
+                                        <label class="form-label small fw-semibold mb-1">
+                                            Type
+                                        </label>
+
+                                        <select name="type" class="form-select">
+
+                                            <option value="">All</option>
+
+                                            <option value="IN"
+                                                {{ request('type') == 'IN' ? 'selected' : '' }}>
+                                                Add
+                                            </option>
+
+                                            <option value="OUT"
+                                                {{ request('type') == 'OUT' ? 'selected' : '' }}>
+                                                Reduce
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- From -->
+                                    <div class="col-6 col-md-3 col-lg-2">
+
+                                        <label class="form-label small fw-semibold mb-1">
+                                            From
+                                        </label>
+
+                                        <input type="date"
+                                            name="from"
+                                            value="{{ request('from') }}"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- To -->
+                                    <div class="col-6 col-md-3 col-lg-2">
+
+                                        <label class="form-label small fw-semibold mb-1">
+                                            To
+                                        </label>
+
+                                        <input type="date"
+                                            name="to"
+                                            value="{{ request('to') }}"
+                                            class="form-control">
+
+                                    </div>
+
+                                    <!-- User -->
+                                    <div class="col-6 col-md-3 col-lg-2">
+
+                                        <label class="form-label small fw-semibold mb-1">
+                                            User
+                                        </label>
+
+                                        <select name="user_id" class="form-select">
+
+                                            <option value="">All Users</option>
+
+                                            @foreach($users as $user)
+                                            <option value="{{ $user->id }}"
+                                                {{ request('user_id') == $user->id ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Buttons -->
+                                    <div class="col-12 col-lg-1">
+
+                                        <div class="d-flex gap-2">
+
+                                            <button type="submit"
+                                                class="btn btn-primary flex-fill">
+                                                Filter
+                                            </button>
+
+                                            <a href="{{ route('stock') }}"
+                                                class="btn btn-outline-secondary">
+                                                <i class="bi bi-arrow-clockwise"></i>
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
 
-                    </div>
-
-                    <!-- Type -->
-                    <div class="col-6 col-md-3 col-lg-2">
-
-                        <label class="form-label small fw-semibold mb-1">
-                            Type
-                        </label>
-
-                        <select class="form-select">
-
-                            <option>All</option>
-                            <option>Add</option>
-                            <option>Reduce</option>
-
-                        </select>
-
-                    </div>
-
-                    <!-- Date From -->
-                    <div class="col-6 col-md-3 col-lg-2">
-
-                        <label class="form-label small fw-semibold mb-1">
-                            From
-                        </label>
-
-                        <input type="date"
-                            class="form-control">
-
-                    </div>
-
-                    <!-- Date To -->
-                    <div class="col-6 col-md-3 col-lg-2">
-
-                        <label class="form-label small fw-semibold mb-1">
-                            To
-                        </label>
-
-                        <input type="date"
-                            class="form-control">
-
-                    </div>
-
-                    <!-- User -->
-                    <div class="col-6 col-md-3 col-lg-2">
-
-                        <label class="form-label small fw-semibold mb-1">
-                            User
-                        </label>
-
-                        <select class="form-select">
-
-                            <option>All Users</option>
-                            <option>Admin</option>
-                            <option>Staff</option>
-
-                        </select>
-
-                    </div>
-
-                    <!-- Reset -->
-                    <div class="col-12 col-lg-1">
-
-                        <button class="btn btn-outline-secondary w-100">
-
-                            <i class="bi bi-arrow-clockwise"></i>
-
-                        </button>
-
-                    </div>
-
+                    </form>
                 </div>
 
             </div>
@@ -171,9 +208,10 @@
                                     {{ $history->old_quantity }}
                                 </td>
 
-                                <td class="{{ $history->quantity_changed < 0 ? 'text-danger' : 'text-success' }} fw-bold">
+                                <td
+                                    class="{{ $history->type === 'IN' ? 'text-success' : 'text-danger' }} fw-bold">
 
-                                    {{ $history->quantity_changed > 0 ? '+' : '' }}
+                                    {{ $history->type === 'IN' ? '+' : '-' }}
                                     {{ $history->quantity_changed }}
 
                                 </td>
