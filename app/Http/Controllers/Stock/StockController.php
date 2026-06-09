@@ -10,77 +10,28 @@ use App\Models\StockHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-
-
-
+use App\Repositories\StockHistoryRepository;
+use App\Repositories\UsersRepository;
 
 class stockController extends Controller
 {
+    protected $repository;
+    protected $usersRepository;
+
+    public function __construct(
+        StockHistoryRepository $repository,
+        UsersRepository $usersRepository
+    ) {
+        $this->repository = $repository;
+        $this->usersRepository = $usersRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $stockHistories = StockHistory::with([
-    //         'user',
-    //         'product.category',
-    //         'product.supplier'
-    //     ])->latest()->paginate(10);
-
-    //     return view('stock.stock_list', compact('stockHistories'));
-    // }
     public function index(Request $request)
     {
-        // dd(
-        //     StockHistory::where('type', 'IN')->count()
-        // );
-        $stockHistories = StockHistory::with([
-            'user',
-            'product.category',
-            'product.supplier'
-        ])
-
-            // Search Product Name or SKU
-            ->when($request->filled('search'), function ($query) use ($request) {
-
-                $query->whereHas('product', function ($q) use ($request) {
-
-                    $q->where('name', 'like', '%' . $request->search . '%')
-                        ->orWhere('sku', 'like', '%' . $request->search . '%');
-                });
-            })
-
-            // Stock Type
-            ->when($request->filled('type'), function ($query) use ($request) {
-
-                $query->where('type', $request->type);
-            })
-
-            // User Filter
-            ->when($request->filled('user_id'), function ($query) use ($request) {
-
-                $query->where('user_id', $request->user_id);
-            })
-
-            // From Date
-            ->when($request->filled('from'), function ($query) use ($request) {
-
-                $query->whereDate('created_at', '>=', $request->from);
-            })
-
-            // To Date
-            ->when($request->filled('to'), function ($query) use ($request) {
-
-                $query->whereDate('created_at', '<=', $request->to);
-            })
-
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
-
-        $users = User::select('id', 'name')
-            ->orderBy('name')
-            ->get();
+        $stockHistories = $this->repository->paginate($request);
+        $users = $this->usersRepository->get($request);
 
         return view('stock.stock_list', compact(
             'stockHistories',

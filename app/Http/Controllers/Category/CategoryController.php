@@ -20,26 +20,22 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-        $categories = Category::query();
+        $builder = Category::query();
 
         // Search Filter
         if ($request->filled('search')) {
-            $categories->where(
-                'name',
-                'like',
-                '%' . $request->search . '%'
-            );
+            $builder->where('name', 'like', '%' . $request->search . '%');
         }
 
         // Status Filter
         if ($request->filled('status')) {
-            $categories->where(
+            $builder->where(
                 'status',
                 $request->status
             );
         }
 
-        $categories = $categories
+        $categories = $builder
             ->latest()
             ->paginate(10)
             ->withQueryString();

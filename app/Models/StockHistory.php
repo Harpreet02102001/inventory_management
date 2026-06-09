@@ -29,4 +29,26 @@ class StockHistory extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeWhereType($query, $type = null)
+    {
+        if (!$type) {
+            return $query;
+        }
+        $query->where('type', $type);
+        return $query;
+    }
+
+    public function scopewhereProductKeywords($query, $search = null)
+    {
+        if (!$search) {
+            return $query;
+        }
+        $query->whereHas('product', function ($q) use ($search) {
+
+            $q->where('name', 'like', '%' . $search . '%')
+                ->orWhere('sku', 'like', '%' . $search . '%');
+        });
+        return $query;
+    }
 }

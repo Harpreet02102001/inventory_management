@@ -93,15 +93,61 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $roles = Role::get();
+        $user = User::findOrFail($id);
+        return view('user.userUpdate', compact('user', 'roles'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email,' . $id,
+            'role_id'   => 'required|exists:roles,id',
+            'is_active' => 'required|boolean',
+            'password'  => 'required|confirmed|min:8',
+        ]);
+
+        try {
+
+            DB::beginTransaction();
+
+            $user = User::findOrFail($id);
+
+            $data = [
+                'name'      => $validated['name'],
+                'email'     => $validated['email'],
+                'role_id'   => $validated['role_id'],
+                'is_active' => $validated['is_active'],
+            ];
+
+            if (!empty($validated['password'])) {
+                $data['password'] = Hash::make($validated['password']);
+            }
+
+            $user->update($data);
+
+            DB::commit();
+
+            Alert::toast('User updated successfully.', 'success');
+
+            return redirect()->route('user')->with('success', 'User updated successfully.');
+        } catch (\Throwable $th) {
+
+            // dd($th->getMessage());
+
+            DB::rollBack();
+
+            Alert::toast('An error occurred while updating the user.', 'error');
+
+            return back()
+                ->withInput()
+                ->with('error', $th->getMessage());
+        }
     }
 
     public function updateProfile(Request $request)

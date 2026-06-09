@@ -92,7 +92,7 @@
                                             View
                                         </a>
 
-                                        <a href="#"
+                                        <a href="{{ route('user.edit', $user->id )}}"
                                             class="btn btn-sm btn-outline-warning">
                                             Edit
                                         </a>

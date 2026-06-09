@@ -22,22 +22,29 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // iF authentication successful complete the login process and redirect user
+
+            $request->session()->regenerate();
+
+            // dd(Auth::user());
+            // Update last login time
+            Auth::user()->update([
+                'last_login_at' => now(),
+            ]);
+
             return redirect()->intended('/');
         }
-        // Alert::toast('Invalid email or password.', 'error')->autoClose(1500);
+
         return back()->withErrors([
-            'email' => 'The provided email do not match our records.',
-            'password' => 'The provided credentials do not match our records.',
-        ]);
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
     /**
      * Show the form for creating a new resource.
