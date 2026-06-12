@@ -3,3 +3,4 @@
 namespace App\Repositories;
 
 class AppRepository {}
+    

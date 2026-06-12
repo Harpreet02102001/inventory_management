@@ -211,7 +211,7 @@
                                 <td
                                     class="{{ $history->type === 'IN' ? 'text-success' : 'text-danger' }} fw-bold">
 
-                                    {{ $history->type === 'IN' ? '+' : '-' }}
+                                {{ $history->type === 'IN' ? '+' : '-' }}
                                     {{ $history->quantity_changed }}
 
                                 </td>

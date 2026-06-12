@@ -24,29 +24,13 @@ class DashboardController extends Controller
 
             'totalSuppliers' => Supplier::count(),
 
-            'lowStockCount' => Product::where(
-                'stock_quantity',
-                '<=',
-                10
-            )->count(),
+            'lowStockCount' => Product::where('stock_quantity', '<=', 10)->count(),
 
-            'recentStockCount' => StockHistory::whereDate(
-                'created_at',
-                today()
-            )->count(),
+            'recentStockCount' => StockHistory::whereDate('created_at', today())->count(),
 
-            'lowStockProducts' => Product::with('category')
-                ->where('stock_quantity', '<=', 10)
-                ->take(5)
-                ->get(),
+            'lowStockProducts' => Product::with('category')->where('stock_quantity', '<=', 10)->take(5)->get(),
 
-            'recentStockUpdates' => StockHistory::with([
-                'product',
-                'user'
-            ])
-                ->latest()
-                ->take(5)
-                ->get(),
+            'recentStockUpdates' => StockHistory::with(['product', 'user'])->latest()->take(5)->get(),
         ]);
     }
     public function index()

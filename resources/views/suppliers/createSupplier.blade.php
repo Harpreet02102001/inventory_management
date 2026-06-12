@@ -22,7 +22,6 @@
                 <form action="{{route('supplier.store')}}" method="POST">
 
                     @csrf
-
                     <!-- Name -->
                     <div class="mb-4">
                         <label class="form-label fw-semibold">

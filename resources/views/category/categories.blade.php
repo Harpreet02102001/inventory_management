@@ -119,20 +119,20 @@
                     </thead>
 
                     <tbody>
-                        @forelse($categories as $category)
+                        @forelse($items as $item)
                         <tr>
-                            <td>{{ $category->id }}</td>
+                            <td>{{ $item->id }}</td>
 
                             <td class="fw-semibold">
-                                {{ $category->name }}
+                                {{ $item->name }}
                             </td>
 
                             <td>
-                                {{ $category->description }}
+                                {{ $item->description }}
                             </td>
 
                             <td>
-                                @if ($category->status == '1')
+                                @if ($item->status == '1')
                                 <span class="badge bg-success-subtle text-success">
                                     Active
                                 </span>
@@ -143,22 +143,22 @@
                                 @endif
                             </td>
 
-                            <td>{{ $category->products_count }}</td>
+                            <td>{{ $item->products_count }}</td>
 
-                            <td>{{ $category->created_at->format('M d, Y') }}</td>
+                            <td>{{ $item->created_at->format('M d, Y') }}</td>
 
                             <td>
                                 <div class="d-flex justify-content-center gap-1">
 
-                                    @can('update', $category)
-                                    <a href="{{ route('categories.edit', $category) }}"
+                                    @can('update', $item)
+                                    <a href="{{ route('categories.edit', $item) }}"
                                         class="btn btn-sm btn-outline-warning">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     @endcan
 
-                                    @can('delete', $category)
-                                    <form action="{{ route('categories.destroy', $category->id) }}"
+                                    @can('delete', $item)
+                                    <form action="{{ route('categories.destroy', $item->id) }}"
                                         method="POST"
                                         onsubmit="return confirm('Are you sure you want to delete this category?')">
 
@@ -191,7 +191,7 @@
                     </tbody>
 
                 </table>
-                {{ $categories->links() }}
+                {{ $items->links() }}
             </div>
 
 

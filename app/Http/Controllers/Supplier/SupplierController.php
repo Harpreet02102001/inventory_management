@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\Product;
 
 class SupplierController extends Controller
 {
@@ -20,7 +21,7 @@ class SupplierController extends Controller
     // }
     public function index(Request $request)
     {
-        $suppliers = Supplier::query();
+        $suppliers = Supplier::query()->withCount('products');;
 
         if ($request->filled('search')) {
 

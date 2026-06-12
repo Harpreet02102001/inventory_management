@@ -88,4 +88,4 @@ Route::prefix('/login')->group(function () {
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 });
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');;

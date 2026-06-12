@@ -56,10 +56,11 @@
                             {{-- Product Image --}}
                             <td width="90">
 
-                                <img src="{{ asset('storage/products/' . $product->image_url) }}"
-                                    class="img-thumbnail"
-                                    width="60">
-
+                                <img src="{{ $product->image_url ? asset('storage/' . $product->image_url) : 'https://via.placeholder.com/45' }}"
+                                    class="rounded border"
+                                    width="45"
+                                    height="45"
+                                    style="object-fit:cover;">
                             </td>
 
                             {{-- Product Name --}}

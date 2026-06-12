@@ -127,9 +127,10 @@
                             </td>
 
                             <td>
-                                {{ $supplier->products_count ?? 0 }}
+                                <a class="text-decoration-none" href="{{ route('product', ['supplier_id' => $supplier->id]) }}">
+                                    {{ $supplier->products_count }}
+                                </a>
                             </td>
-
                             <td>
                                 {{ $supplier->created_at->format('M d, Y') }}
                             </td>

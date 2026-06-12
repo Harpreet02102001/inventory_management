@@ -3,56 +3,37 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\CategoryRepository;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
-use function PHPUnit\Framework\returnSelf;
-
 class CategoryController extends Controller
 {
-    // public function index()
-    // {
-    //     $categories = Category::get();
-    //      return view('category.categories', compact('categories'));
-    // }
-
-    public function index(Request $request)
-    {
-        $builder = Category::query();
-
-        // Search Filter
-        if ($request->filled('search')) {
-            $builder->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        // Status Filter
-        if ($request->filled('status')) {
-            $builder->where(
-                'status',
-                $request->status
-            );
-        }
-
-        $categories = $builder
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
-
-        return view(
-            'category.categories',
-            compact('categories')
-        );
+    protected $categoryRepository;
+    // __construct function to crea
+    public function __construct(
+        CategoryRepository $categoryRepository
+    ) {
+        $this->categoryRepository = $categoryRepository;
     }
 
+    //index function start from here 
+    public function index(Request $request)
+    {
+        $items = $this->categoryRepository->getCategories($request->all());
+        return view('category.categories', compact('items'));
+    }
+
+    // show form to create resources
     public function create()
     {
         $this->authorize('create', Category::class);
-        $categories = Category::get();
-        return view('category.CreateCategory', compact('categories'));
+        return view('category.CreateCategory');
     }
 
+    // show store function start from here
     public function store(Request $request)
     {
         $this->authorize('create', Category::class);
@@ -65,17 +46,21 @@ class CategoryController extends Controller
         try {
 
             DB::beginTransaction();
-            Category::create($validated);
+
+            $this->categoryRepository->store($validated);
             DB::commit();
             Alert::toast('Category created Successfully.', 'success');
             return redirect()->route('categories');
         } catch (\Throwable $th) {
+
             DB::rollBack();
+
             Alert::toast('An Error occured while creating the Category.', 'error');
             return back()->withInput();
         }
     }
 
+    //show function start from heres
     public function show()
     {
         return view('category.updateCategory');

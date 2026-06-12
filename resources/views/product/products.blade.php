@@ -206,9 +206,10 @@
 
                         @forelse($products as $product)
 
-                        <tr>
+                        <tr onclick="window.location='{{ route('product.show', $product) }}'"
+                            style="cursor: pointer;">
 
-                            <td class="ps-3">
+                            <td class=" ps-3">
 
                                 <img src="{{ $product->image_url ? asset('storage/' . $product->image_url) : 'https://via.placeholder.com/45' }}"
                                     class="rounded border"
@@ -248,7 +249,7 @@
 
 
                             </td>
-
+                            </a>
                             <td class="pe-3">
 
                                 <div class="d-flex justify-content-center gap-1 flex-wrap">
@@ -300,6 +301,7 @@
                                         <i class="bi bi-box"></i>
                                     </button> -->
                                     @empty
+
 
                         <tr>
                             <td colspan="7" class="text-center py-4">

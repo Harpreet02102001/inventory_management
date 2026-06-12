@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\SweetAlertServiceProvider;
-use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -16,7 +14,9 @@ class AuthController extends Controller
     public function index()
     {
         if (Auth::check()) {
+            return redirect('/');
         }
+
         return view('auth.login');
     }
 
