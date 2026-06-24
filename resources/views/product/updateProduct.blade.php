@@ -3,9 +3,9 @@
     <!-- Page Header -->
     <div class="mb-4">
 
-        <h1 class="fw-bold display-6 mb-1">
+        <h2 class="fw-bold  mb-1">
             Update Product
-        </h1>
+        </h2>
 
         <p class="text-secondary fs-5">
             Update an existing inventory product
@@ -332,12 +332,12 @@
 
                 </button>
 
-                <button type="button"
+                <a href="{{route('product')}}" type="button"
                     class="btn btn-light border btn-lg px-4">
 
                     Cancel
 
-                </button>
+                </a>
 
             </div>
 

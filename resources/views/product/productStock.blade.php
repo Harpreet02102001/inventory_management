@@ -233,12 +233,12 @@
 
                     </button>
 
-                    <button type="button"
+                    <a href="{{route('product')}}" type="button"
                         class="btn btn-light border">
 
                         Cancel
 
-                    </button>
+                    </a>
 
                 </div>
 

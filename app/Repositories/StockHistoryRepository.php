@@ -41,10 +41,7 @@ class StockHistoryRepository extends AppRepository
             ->when($request->filled('to'), function ($query) use ($request) {
 
                 $query->whereDate('created_at', '<=', $request->to);
-            })
-
-            ->latest()
-            ->paginate(10);
+            })->latest()->paginate(10);
 
         return $items;
     }

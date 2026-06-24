@@ -160,19 +160,6 @@
 
     </div>
 
-    <!-- Info Alert -->
-    <div class="alert alert-primary d-flex align-items-start gap-2 py-2 rounded-3 small mb-4">
-
-        <i class="bi bi-info-circle-fill mt-1"></i>
-
-        <div>
-
-            Staff users can only view and update stock.
-
-        </div>
-
-    </div>
-
     <!-- Product Table -->
     <div class="card border-0 shadow-sm rounded-4">
 
@@ -204,10 +191,9 @@
                     <tbody>
 
 
-                        @forelse($products as $product)
+                        @forelse($items as $product)
 
-                        <tr onclick="window.location='{{ route('product.show', $product) }}'"
-                            style="cursor: pointer;">
+                        <tr>
 
                             <td class=" ps-3">
 
@@ -219,15 +205,12 @@
 
                             </td>
 
-                            <td class="fw-semibold">
-                                {{ $product->name }}
-                            </td>
+                            <td class="fw-semibold">{{ $product->name }}</td>
 
                             <td>{{ $product->sku }}</td>
+                            <td>{{ $product->category?->name ?? 'Category Not found' }}</td>
 
-                            <td>{{ $product->category->name }}</td>
-
-                            <td>{{ $product->supplier->name }}</td>
+                            <td>{{ $product->supplier?->name ?? 'Supplier not found' }}</td>
 
                             <td>${{ number_format($product->price, 2) }}</td>
 
@@ -336,7 +319,7 @@
 
                 <ul class="pagination pagination-sm mb-0">
 
-                    {{ $products->links() }}
+                    {{ $items->links() }}
 
                 </ul>
 

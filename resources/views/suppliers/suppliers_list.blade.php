@@ -126,11 +126,13 @@
                                 {{ $supplier->phone }}
                             </td>
 
-                            <td>
-                                <a class="text-decoration-none" href="{{ route('product', ['supplier_id' => $supplier->id]) }}">
-                                    {{ $supplier->products_count }}
-                                </a>
+                            <td
+                                onclick="window.location='{{ route('product', ['supplier_id' => $supplier->id]) }}'"
+                                style="cursor:pointer;"
+                                title="View supplier products">
+                                {{ $supplier->products_count }}
                             </td>
+
                             <td>
                                 {{ $supplier->created_at->format('M d, Y') }}
                             </td>

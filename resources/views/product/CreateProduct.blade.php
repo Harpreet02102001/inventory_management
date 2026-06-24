@@ -3,9 +3,9 @@
     <!-- Page Header -->
     <div class="mb-4">
 
-        <h1 class="fw-bold display-6 mb-1">
-            Add Product
-        </h1>
+        <h2 class="fw-bold mb-1">
+            Add Products
+        </h2>
 
         <p class="text-secondary fs-5">
             Create a new inventory product
@@ -47,7 +47,7 @@
                                 name="name">
 
                             @error('name')
-                            <span class="texr-danger">$message</span>
+                            <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -61,7 +61,9 @@
                             </label>
 
                             <input type="text" class="form-control form-control-lg" placeholder="Enter SKU (e.g. WM-001)" name="sku">
-
+                            @error('sku ')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Category -->
@@ -154,20 +156,14 @@
                         <!-- Purchase Price -->
                         <div class="col-lg-6">
 
-                            <label class="form-label fw-semibold">
-                                Purchase Price
-                                <span class="text-danger">*</span>
+                            <label class="form-label fw-semibold">Purchase Price<span class="text-danger">*</span>
                             </label>
 
-                            <input type="number"
-                                class="form-control form-control-lg"
-                                placeholder="0.00"
-                                name="price">
-
-                            <small class="text-secondary">
-                                Enter the product purchase price.
-                            </small>
-
+                            <input type="number" class="form-control form-control-lg" placeholder="0.00" name="price">
+                            @error('price ')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            <small class="text-secondary">Enter the product purchase price.</small>
                         </div>
 
                         <!-- Selling Price -->
@@ -182,6 +178,10 @@
                                 class="form-control form-control-lg"
                                 placeholder="0.00"
                                 name="selling_price">
+
+                            @error('selling_price')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
 
                             <small class="text-secondary">
                                 Enter the product selling price.
@@ -234,6 +234,9 @@
                                 class="form-control form-control-lg"
                                 placeholder="0"
                                 name="stock_quantity">
+                            @error('stock_quantity')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
 
                             <small class="text-secondary">
                                 Enter the initial stock quantity.
@@ -332,12 +335,12 @@
 
                 </button>
 
-                <button type="button"
+                <a href="{{route('product')}}" type="button"
                     class="btn btn-light border btn-lg px-4">
 
                     Cancel
 
-                </button>
+                </a>
 
             </div>
 

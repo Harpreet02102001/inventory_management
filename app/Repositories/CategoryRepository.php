@@ -32,10 +32,21 @@ class CategoryRepository
     {
         return Category::get();
     }
-    // function to store the validated data from controller
 
+
+
+    // function to store the validated data from controller
     public function store(array $data)
     {
         return Category::create($data);
+    }
+
+    public function update($id, array $data)
+    {
+
+        $category = Category::findOrFail($id);
+        $category->update($data);
+
+        return $category;
     }
 }

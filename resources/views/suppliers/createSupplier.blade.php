@@ -151,12 +151,12 @@
 
                         </button>
 
-                        <button type="button"
+                        <a href="{{route('supplier')}}" type="button"
                             class="btn btn-light btn-lg border px-4">
 
                             Cancel
 
-                        </button>
+                        </a>
 
                     </div>
 

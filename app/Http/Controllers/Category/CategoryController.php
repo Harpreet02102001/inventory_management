@@ -12,10 +12,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 class CategoryController extends Controller
 {
     protected $categoryRepository;
-    // __construct function to crea
-    public function __construct(
-        CategoryRepository $categoryRepository
-    ) {
+
+    // __construct function to creation
+    public function __construct(CategoryRepository $categoryRepository)
+    {
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -90,7 +90,7 @@ class CategoryController extends Controller
 
             $category = Category::findOrFail($id);
             $this->authorize('update', $category);
-            $category->update($validated);
+            $this->categoryRepository->update($id, $validated);
 
             DB::commit();
             Alert::toast('Category updated Successfully.', 'success');
