@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Supplier;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SupplierRequest;
+use App\Http\Requests\UpdateSupplierRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
@@ -54,18 +56,10 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SupplierRequest $request)
     {
-        // dd($request->all());
-        $validated = $request->validate([
-            'name' => 'required|min:2|max:255',
-            'email' => 'required|email|unique:suppliers,email',
-            'phone' => 'required|min:10|max:15',
-            'company' => 'required|min:2|max:255',
-            'address' => 'required|min:5|max:255',
-        ]);
+        $validated = $request->validated();
 
-        // dd($request->all());
         try {
             DB::beginTransaction();
             Supplier::create($validated);
@@ -101,16 +95,9 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSupplierRequest $request, string $id)
     { {
-            // dd($request->all());
-            $validated = $request->validate([
-                'name' => 'required|min:2|max:255',
-                'email' => 'required|email|unique:suppliers,email,' . $id,
-                'phone' => 'required|min:10|max:15',
-                'company' => 'required|min:2|max:255',
-                'address' => 'required|min:5|max:255',
-            ]);
+            $validated = $request->validated();
 
             // dd($request->all());
             try {

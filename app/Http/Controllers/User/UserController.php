@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
@@ -35,16 +37,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         // dd($request->all());
-        $validated = $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|email|unique:users,email',
-            'role_id'   => 'required|exists:roles,id',
-            'is_active' => 'required|boolean',
-            'password'  => 'required|confirmed|min:8',
-        ]);
+        $validated = $request->validated();
 
         try {
 
@@ -102,15 +98,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        $validated = $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|email|unique:users,email,' . $id,
-            'role_id'   => 'required|exists:roles,id',
-            'is_active' => 'required|boolean',
-            'password'  => 'required|confirmed|min:8',
-        ]);
+        $validated = $request->validated();
 
         try {
 
@@ -152,6 +142,7 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
+        // dd($request->all());
         try {
 
             $validated = $request->validate([
@@ -204,6 +195,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return back();
     }
 }

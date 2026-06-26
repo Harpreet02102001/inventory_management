@@ -58,6 +58,7 @@ class ProductRepository
             )->latest()->paginate(10)->withQueryString();
     }
 
+    //funtion to get a
     function getAll()
     {
         return Product::get();
@@ -70,9 +71,10 @@ class ProductRepository
     }
 
     //function to update the data the validated data from the controller
-    function update(array $data)
+    function update(Product $product, array $data)
     {
-        return Product::update($data);
+        $product->update($data);
+        return $product;
     }
 
     //function to delete the data from DBwh

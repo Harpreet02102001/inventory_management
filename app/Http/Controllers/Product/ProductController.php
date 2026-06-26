@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Supplier;
@@ -54,25 +56,9 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        // dd(
-        //     $request->all()
-        //     , $request->file('image_url')
-        // );
-
-
-        $validated = $request->validate([
-            'name'           => 'required|min:2|max:100|unique:products,name',
-            'sku'            => 'required|string|max:255',
-            'category_id'    => 'required|exists:categories,id',
-            'supplier_id'    => 'required|exists:suppliers,id',
-            'price'          => 'required|numeric|min:0',
-            'selling_price'  => 'required|numeric|min:0',
-            'stock_quantity' => 'required|integer|min:0',
-            'image_url'      => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'status'         => 'required|integer|in:1,2',
-        ]);
+        $validated = $request->validated();
 
         try {
             DB::beginTransaction();
@@ -115,29 +101,28 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
-        $validated = $request->validate([
-            'name'           => 'required|min:2|max:100|unique:products,name,' . $id,
-            'sku'            => 'nullable|max:255',
-            'category_id'    => 'required|exists:categories,id',
-            'supplier_id'    => 'required|exists:suppliers,id',
-            'price'          => 'required|numeric|min:0',
-            'selling_price'  => 'required|numeric|min:0',
-            'stock_quantity' => 'required|integer|min:0',
-            'image_url'      => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'status'         => 'required|integer|in:1,2',
-        ]);
+        $validated = $request->validated();
 
         try {
             DB::beginTransaction();
 
+            $product = Product::findOrFail($id);
+
+            $this->authorize('update', $product);
+
             if ($request->hasFile('image_url')) {
-                $validated['image_url'] = $request->file('image_url')->storeAs('products', 'ProductsImage' . time() . "." . $request->file('image_url')->getClientOriginalExtension(), 'public');
+                $validated['image_url'] = $request
+                    ->file('image_url')
+                    ->storeAs('products', 'ProductsImage' . time() . "." . $request->file('image_url')->getClientOriginalExtension(), 'public');
             }
 
-            Product::findOrFail($id)->update($validated);
+            // Product::findOrFail($id)->update($validated);
+            $this->productRepository->update($product, $validated);
+
             DB::commit();
+
             Alert::toast('Product updated Successfully.', 'success');
             return redirect()->route('product');
         } catch (\Throwable $th) {
