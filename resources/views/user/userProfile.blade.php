@@ -68,7 +68,11 @@
                                             name="name"
                                             class="form-control"
                                             value="{{ $user->name }}">
-
+                                        @error('name')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-4">
@@ -80,7 +84,12 @@
                                         <input type="email"
                                             name="email"
                                             class="form-control"
-                                            value="{{ $user->email }}">
+                                            value="{{ $user->email }}" disabled>
+                                        @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
 
                                         <small class="text-muted">
                                             This email is used for system notifications.
@@ -255,8 +264,7 @@
                             <input type="password"
                                 name="password_confirmation"
                                 class="form-control @error('password_confirmation') is-invalid @enderror">
-
-                            @error('password_confirmation')
+                            @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

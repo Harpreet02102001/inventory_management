@@ -11,19 +11,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Repositories\StockHistoryRepository;
-use App\Repositories\UsersRepository;
+use App\Repositories\UserRepository;
 
 class stockController extends Controller
 {
     protected $repository;
-    protected $usersRepository;
+    protected $userRepository;
 
     public function __construct(
         StockHistoryRepository $repository,
-        UsersRepository $usersRepository
+        UserRepository $userRepository
     ) {
         $this->repository = $repository;
-        $this->usersRepository = $usersRepository;
+        $this->userRepository = $userRepository;
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class stockController extends Controller
     public function index(Request $request)
     {
         $stockHistories = $this->repository->paginate($request);
-        $users = $this->usersRepository->get($request);
+        $users = $this->userRepository->get($request);
 
         return view('stock.stock_list', compact(
             'stockHistories',
@@ -48,7 +48,7 @@ class stockController extends Controller
 
     public function viewData()
     {
-        $products = Product::with(['category', 'supplier'])->where('stock_quantity', '<=', 10)->paginate(10);
+        $products = Product::with(['category', 'supplier'])->where('stock_quantity', '<=', 10)->paginate(10)->withQueryString();
 
         return view('stock.low_stock', compact('products'));
     }
@@ -113,40 +113,4 @@ class stockController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        dd($id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

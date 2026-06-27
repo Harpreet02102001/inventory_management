@@ -42,7 +42,7 @@ class StockHistory extends Model
     public function scopewhereProductKeywords($query, $search = null)
     {
         if (!$search) {
-            return $query;
+            return $query;  
         }
         $query->whereHas('product', function ($q) use ($search) {
 

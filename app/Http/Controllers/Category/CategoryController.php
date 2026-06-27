@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -72,14 +73,10 @@ class CategoryController extends Controller
         return view('category.updateCategory', compact('category'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         // dd($request->all(), $id);
-        $validated = $request->validate([
-            'name'           => 'required|min:2|max:100,unique:categories,name,' . $id,
-            'description'    => 'nullable|max:255',
-            'status'         => 'required|boolean'
-        ]);
+        $validated = $request->validated();
 
         try {
 

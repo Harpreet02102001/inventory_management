@@ -3,18 +3,30 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Repositories\UserRepository;
 
 class UserController extends Controller
 {
+
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -46,13 +58,16 @@ class UserController extends Controller
 
             DB::beginTransaction();
 
-            User::create([
-                'name'      => $validated['name'],
-                'email'     => $validated['email'],
-                'role_id'   => $validated['role_id'],
-                'is_active' => $validated['is_active'],
-                'password'  => Hash::make($validated['password']),
-            ]);
+            // User::create([
+            //     'name'      => $validated['name'],
+            //     'email'     => $validated['email'],
+            //     'role_id'   => $validated['role_id'],
+            //     'is_active' => $validated['is_active'],
+            //     'password'  => Hash::make($validated['password']),
+            // ]);
+
+            //above code help to store the user through the repository after validated from UserRequest
+            $this->userRepository->store($request->validated());
 
             DB::commit();
 
@@ -100,35 +115,18 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id)
     {
-        $validated = $request->validated();
-
         try {
 
             DB::beginTransaction();
 
-            $user = User::findOrFail($id);
-
-            $data = [
-                'name'      => $validated['name'],
-                'email'     => $validated['email'],
-                'role_id'   => $validated['role_id'],
-                'is_active' => $validated['is_active'],
-            ];
-
-            if (!empty($validated['password'])) {
-                $data['password'] = Hash::make($validated['password']);
-            }
-
-            $user->update($data);
+            $this->userRepository->update($id, $request->validated());
 
             DB::commit();
 
             Alert::toast('User updated successfully.', 'success');
 
-            return redirect()->route('user')->with('success', 'User updated successfully.');
+            return redirect()->route('user.index');
         } catch (\Throwable $th) {
-
-            // dd($th->getMessage());
 
             DB::rollBack();
 
@@ -140,15 +138,11 @@ class UserController extends Controller
         }
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(UpdateProfileRequest $request)
     {
-        // dd($request->all());
         try {
 
-            $validated = $request->validate([
-                'name'  => 'required|max:255',
-                'email' => 'required|email|unique:users,email,' . auth()->id(),
-            ]);
+            $validated = $request->validated();
 
             auth()->user()->update($validated);
 
@@ -168,12 +162,9 @@ class UserController extends Controller
         }
     }
 
-    public function updatePassword(Request $request)
+    public function updatePassword(UpdatePasswordRequest $request)
     {
-        $validated = $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|min:8|confirmed',
-        ]);
+        $validated = $request->validated();
 
         $user = auth()->user();
 

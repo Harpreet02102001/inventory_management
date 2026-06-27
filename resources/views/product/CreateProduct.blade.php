@@ -273,10 +273,10 @@
                                     Max file size: 2MB
                                 </small>
 
-                                <input type="file"
-                                    class="form-control mt-3"
-                                    name="image_url">
-
+                                <input type="file" class="form-control mt-3" name="image_url">
+                                @error('image_url')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                         </div>

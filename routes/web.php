@@ -24,17 +24,19 @@ Route::prefix('/')->middleware('auth')->group(function () {
     // });
 });
 
+
 Route::prefix('/user')->middleware('auth')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('user.index');
     Route::get('/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/store', [UserController::class, 'store'])->name('user.store');
-    Route::put('{id}/update', [UserController::class, 'update'])->name('user.update');
+    // Static routes first
     Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
     Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
+    // Dynamic routes last
     Route::get('/{id}', [UserController::class, 'show'])->name('user.show');
-    Route::get('{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/{id}/update', [UserController::class, 'update'])->name('user.update');
 });
-
 
 // Route to handle suppliers transactiions
 
